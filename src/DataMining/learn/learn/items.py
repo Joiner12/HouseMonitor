@@ -6,10 +6,7 @@
 import scrapy
 
 
-class HotzhihuItem(scrapy.Item):
+class LearnItem(scrapy.Item):
     # define the fields for your item here like:
     # name = scrapy.Field()
-    QuestionContent = scrapy.Field()
-    QuestionKeyWord = scrapy.Field()
-    QuestionAnswersId = scrapy.Field()
-    QuestionAnswersDetail = scrapy.Field()
+    pass
