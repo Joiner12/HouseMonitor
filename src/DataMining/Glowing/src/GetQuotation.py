@@ -20,19 +20,24 @@ class Quotation():
         self.Urls = ["https://lovelive.tools/", "https://chp.shadiao.app/"]
         self.words_love = list()
         self.words_chp = list()
-
+        self.LoopCnt = 0
     # https://lovelive.tools/
+
     def getQuotation_love(self):
         repeat_cnt_1 = 0
         test_cnt = 0
         browser_1 = webdriver.Chrome(
             executable_path=r"D:\Code\HouseMonitor\src\DataMining\Glowing\chromedriver.exe")
         browser_1.set_window_size(480, 800)
-        browser_1.implicitly_wait(30)  # 隐性等待，最长等10秒
+        browser_1.implicitly_wait(5)  # 隐性等待，最长等5秒
         browser_1.get(self.Urls[0])
         while True:
-            piece_btn = browser_1.find_element_by_css_selector(
-                '.ant-btn.active')
+            self.LoopCnt += 1
+            if True:
+                piece_btn = browser_1.find_element_by_css_selector(
+                    '.ant-btn-primary')
+            else:
+                piece_btn = browser_1.find_elements_by_link_text("再来一条")
             piece_btn.click()
             # quotation
             if False:  # x_path
@@ -53,25 +58,30 @@ class Quotation():
             # cur_words = cur_words.encode("gbk", "ignore").decode("gbk")
             if repeat_cnt_1 > 1:
                 break
+                print("robot stop")
             # 重复检测
             if not cur_words in self.words_love:
                 self.words_love.append(cur_words)
-                test_cnt += 1
                 repeat_cnt_1 = 0
             else:
                 repeat_cnt_1 += 1
-        time.sleep(1+random())
+
+            # 写文件
+            if self.LoopCnt % 10 == 0:
+                self.LoopCnt = 0
+                with open(r"D:\Code\HouseMonitor\src\DataMining\Glowing\text\love.txt", 'a', encoding='utf-8') as f:
+                    f.writelines(self.words_love)
+                self.words_love = list()
+                time.sleep(4)
+            time.sleep(2+random())
         browser_1.quit()
-        # write to file
-        with open(r"D:\Code\HouseMonitor\src\DataMining\Glowing\text\love.txt", 'a', encoding="utf-8") as f:
-            f.writelines(self.words_love)
     """
         https://chp.shadiao.app/
     """
 
     def getQuotation_chp(self):
         repeat_cnt_2 = 0
-        LoopCnt = 0
+        self.LoopCnt = 0
         browser_2 = webdriver.Chrome(
             executable_path=r"D:\Code\HouseMonitor\src\DataMining\Glowing\chromedriver.exe")
         browser_2.set_window_size(480, 800)
@@ -89,7 +99,7 @@ class Quotation():
             cur_words = showText.text + "\n"
             print(cur_words)
             if repeat_cnt_2 > 1:
-                print("self stop")
+                print("robot stop")
                 break
             # 重复检测
             if not cur_words in self.words_chp:
@@ -97,15 +107,15 @@ class Quotation():
                 repeat_cnt_2 = 0
             else:
                 repeat_cnt_2 += 1
-            LoopCnt += 1
+            self.LoopCnt += 1
             # 写文件
-            if LoopCnt % 100 == 0:
-                LoopCnt = 0
+            if self.LoopCnt % 10 == 0:
+                self.LoopCnt = 0
                 with open(r"D:\Code\HouseMonitor\src\DataMining\Glowing\text\chp.txt", 'a', encoding='utf-8') as f:
                     f.writelines(self.words_chp)
                 self.words_chp = list()
                 time.sleep(2)
-            time.sleep(1+random())
+            time.sleep(2+random())
         browser_2.quit()
 
 
@@ -116,5 +126,7 @@ def testFcn():
 
 if __name__ == "__main__":
     tQ = Quotation()
-    # tQ.getQuotation_love()
-    tQ.getQuotation_chp()
+    if False:
+        tQ.getQuotation_love()
+    else:
+        tQ.getQuotation_chp()
