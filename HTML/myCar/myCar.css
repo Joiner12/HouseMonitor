@@ -1,0 +1,128 @@
+body{
+    margin:5px;
+    padding:0px;
+    font-size:12px;
+    line-height:20px;
+    color:#333;
+}
+
+div{
+    margin:10px auto 10px auto;
+    width:800px;
+}
+
+#header{
+    height:40px;
+    width:800px;
+    padding:10px;
+}
+
+a{
+    text-decoration:none;
+    color:#1965b3;
+}
+a:hover{
+     text-decoration: underline;
+     color: green;
+}
+ul,li{
+    list-style:none;
+    margin:0px;
+    padding:0px;
+}
+img{
+    border:0px;
+    vertical-align :middle;
+}
+#list{
+    margin:margin:5px 5px;
+    width:800px;
+    clear:both;
+}
+#list li{
+    float:left;
+    height:23px;
+    margin:10px auto 10px auto;
+    line-height:26px;
+}
+li.oxuanzhong_arraw{
+    background-image:url(../images/taobao_bg.png);
+    background-repeat:no-repeat;
+    background-position:-12px -92px;
+    width:3px;
+}
+li.list_xuanzhong{
+    background-color:#ff6600;
+    text-align:center;
+    font-size:14px;
+    font-weight:bold;
+    color:#FFF;
+    width:130px;
+}
+li.other_arraw{
+    background-color:#ff6600;
+    background-image:url(../images/taobao_bg.png);
+    background-repeat:no-repeat;
+    background-position:0px 0px;
+    width:13px;
+}
+li.other_list{
+    background-color:#e4e4e4;
+    text-align:center;
+    font-size:14px;
+    font-weight:bold;
+    width:150px;
+}
+#content{
+    width:800px;
+    clear:both;
+}
+tr,td{
+    text-align:left;
+}
+td.line{
+    background-color:#a7cbff;
+    height: 5px;
+}
+td.shopInfo{
+    padding-left:10px;
+    height:23px;
+    vertical-align:bottom;
+    text-align:left;
+}
+#content{
+    width:800px;
+    clear:both;
+}
+
+input.num_input{
+border:solid 1px #666;
+    width:15px;
+    height:15px;
+}
+
+
+td.n1,td.n2,td.n3,td.n4,td.n5,td.n6,td.n7,td.n8{
+    background-color:#e2f2ff;
+    border-bottom:solid 1px #d1ecff;
+    border-top:solid 1px #d1ecff;
+    text-align:center;
+    padding:5px;       
+}       
+td.n1,td.n3,td.n4,td.n5,td.n6,td.n7,td.n8{
+    border-right:solid 1px #FFF;
+}
+img.hand{
+    cursor:pointer;
+}
+td.shopend{
+    text-align:right;
+    padding-right:10px;
+    padding-bottom:10px;
+}
+td.yellow{
+    font-weight:bold;
+    color:#fe6400;
+    font-size:18px;
+    line-height:40px;
+}
