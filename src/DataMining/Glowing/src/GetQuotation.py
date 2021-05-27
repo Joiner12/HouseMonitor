@@ -10,6 +10,8 @@ from selenium import webdriver
 import time
 from random import random
 import os
+from selenium.webdriver.chrome.options import Options
+import numpy
 
 
 class Quotation():
@@ -17,9 +19,10 @@ class Quotation():
         self.Urls = ["https://lovelive.tools/", "https://chp.shadiao.app/"]
         self.words_love = list()
         self.words_chp = list()
-        self.ExecutablePath = r"D:\Codes\HouseMonitor\src\DataMining\Glowing\chromedriver.exe"
-        self.TextPath = r"D:\Codes\HouseMonitor\src\DataMining\Glowing\text"
-
+        # self.ExecutablePath = r"D:\Codes\HouseMonitor\src\DataMining\Glowing\chromedriver.exe"
+        # self.TextPath = r"D:\Codes\HouseMonitor\src\DataMining\Glowing\text"
+        self.ExecutablePath = r"D:\Code\HouseMonitor\src\DataMining\Glowing\chromedriver.exe"
+        self.TextPath = r"D:\Code\HouseMonitor\src\DataMining\Glowing\text"
     # https://lovelive.tools/
 
     def getQuotation_love(self):
@@ -74,7 +77,9 @@ class Quotation():
             if LoopCnt_love % 10 == 0:
                 time.sleep(4 + random())
             time.sleep(2 + random())
-
+            if LoopCnt_love > 1000:
+                pass
+        browser_1.quit()
     """
         https://chp.shadiao.app/
     """
@@ -115,17 +120,45 @@ class Quotation():
             if LoopCnt_chp % 10 == 0:
                 time.sleep(4 + random())
             time.sleep(2 + random())
-        # browser_2.quit()
+            if LoopCnt_chp > 1000:
+                pass
+        browser_2.quit()
 
 
 def testFcn():
-    FilePath = os.path.dirname(os.path.abspath(__file__))
-    dege = 1
+
+    # 以下ip使用自己可使用的代理IP
+    proxy_arr = [
+        '--proxy-server=http://171.35.141.103:9999',
+        '--proxy-server=http://36.248.132.196:9999',
+        # '--proxy-server=http://125.46.0.62:53281',
+        '--proxy-server=http://219.239.142.253:3128',
+        '--proxy-server=http://119.57.156.90:53281',
+        '--proxy-server=http://60.205.132.71:80',
+        '--proxy-server=https://139.217.110.76:3128',
+        '--proxy-server=https://116.196.85.150:3128'
+    ]
+
+    chrome_options = Options()
+
+    proxy = numpy.random.choice(proxy_arr)  # 随机选择一个代理
+    print(proxy)  # 如果某个代理访问失败,可从proxy_arr中去除
+
+    chrome_options.add_argument(proxy)  # 添加代理
+
+    browser = webdriver.Chrome(options=chrome_options)
+
+    browser.set_window_size(200, 200)
+
+    browser.get("http://httpbin.org/ip")
+
+    print(browser.page_source)
+    browser.quit()
 
 
 if __name__ == "__main__":
     tQ = Quotation()
-    if False:
+    if True:
         tQ.getQuotation_love()
     else:
         tQ.getQuotation_chp()
