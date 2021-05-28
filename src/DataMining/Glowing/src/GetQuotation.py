@@ -56,8 +56,11 @@ class Quotation():
             showComment_down = browser_1.find_element_by_xpath(
                 '//*[@id="root"]/div/div[2]/div/div/div/div/div/div[2]/div[1]/div/button[2]/span'
             )
-            cur_words = showText.text + "|" + showComment_up.text + \
-                "|"+showComment_down.text+"\n"
+            if False:
+                cur_words = showText.text + "|" + showComment_up.text + \
+                    "|"+showComment_down.text+"\n"
+            else:
+                cur_words = showText.text+"\n"
             # cur_words = cur_words.encode("gbk", "ignore").decode("gbk")
             # 重复检测
             with open(os.path.join(self.TextPath, "love0.txt"),
@@ -158,7 +161,7 @@ def testFcn():
 
 if __name__ == "__main__":
     tQ = Quotation()
-    if True:
+    if False:
         tQ.getQuotation_love()
     else:
         tQ.getQuotation_chp()

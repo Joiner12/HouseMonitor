@@ -9,7 +9,7 @@ def MergeRepeat():
     ModifiedLines = list()
     DictLines = dict()
     TextPath = r"D:\Code\HouseMonitor\src\DataMining\Glowing\text"
-    with open(os.path.join(TextPath, 'love1.txt'), 'r', encoding="utf-8") as f:
+    with open(os.path.join(TextPath, 'love0.txt'), 'r', encoding="utf-8") as f:
         OriginLines = f.readlines()
 
     if len(OriginLines) == 0:
@@ -36,7 +36,8 @@ def MergeRepeat():
     if len(DictLines) > 0:
         OutLines = list()
         for i_key, i_value in DictLines.items():
-            LineTemp = i_key+"|"+str(i_value[0])+"|"+str(i_value[1])+"\n"
+            # LineTemp = i_key+"|"+str(i_value[0])+"|"+str(i_value[1])+"\n"
+            LineTemp = i_key+"\n"
             OutLines.append(LineTemp)
 
         # write out
