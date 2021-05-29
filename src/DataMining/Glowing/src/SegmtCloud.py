@@ -1,19 +1,20 @@
 # -*- coding:utf-8 -*-
 # 对所有数据进行分词并且绘制图云
 import jieba
-from wordcloud import WordCloud
+from wordcloud import WordCloud, ImageColorGenerator
 import matplotlib.pyplot as plt
 import numpy as np
 from PIL import Image
 import os
 import nltk
 import re
-
-rootPath = r"D:\Code\HouseMonitor\src\DataMining\Glowing"
+from scipy.ndimage import gaussian_gradient_magnitude
+# rootPath = r"D:\Code\HouseMonitor\src\DataMining\Glowing"
+rootPath = r"D:\Codes\HouseMonitor\src\DataMining\Glowing"
 
 
 class SegCloud():
-    def __init__(self, SrcFile=os.path.join(rootPath, "\text\allinone.txt")):
+    def __init__(self, SrcFile=os.path.join(rootPath, r"text\allinone.txt")):
         super().__init__()
         self.SrcFile = SrcFile
 
@@ -38,7 +39,7 @@ class SegCloud():
                 if not i in exceptWords:
                     textCut.append(i)
         textCutFre = nltk.FreqDist(textCut)  # list
-        textCutFre = textCutFre.most_common(80)
+        textCutFre = textCutFre.most_common(50)
 
         # list → dict
         textCutFreDict = {}
@@ -47,19 +48,43 @@ class SegCloud():
 
         # 词云
         font = 'C:/Windows/Fonts/simhei.ttf'
-        alice_mask = np.array(Image.open(
-            os.path.join(rootPath, "img\rainbow.jpg")))
-        wc = WordCloud(font_path=font, background_color=None, max_words=2000,
-                       contour_width=3, contour_color='steelblue', mode='RGBA',
-                       mask=alice_mask)
+        figureColor = np.array(
+            Image.open(os.path.join(rootPath, r"img\cover3.png")))
+        # figureColor = figureColor[::3, ::3]
+        markColor = figureColor.copy()
+        markColor[markColor.sum(axis=2) == 0] = 255
 
+        # 图片边缘区分
+        edges = np.mean([
+            gaussian_gradient_magnitude(markColor[:, :, i] / 255., 2)
+            for i in range(3)
+        ],
+                        axis=0)
+        markColor[edges > 0.08] = 255
+        wc = WordCloud(font_path=font,
+                       background_color="white",
+                       mask=markColor,
+                       max_font_size=40,
+                       random_state=42,
+                       relative_scaling=0)
         wc.generate_from_frequencies(textCutFreDict)
-        plt.imshow(wc, interpolation='bilinear')
+        # color_mark
+        plt.imshow(wc)
+        bimgColor = ImageColorGenerator(figureColor)
+        plt.figure(figsize=(10, 10))
+        plt.title("word cloud ")
+        plt.imshow(wc.recolor(color_func=bimgColor), interpolation="bilinear")
         plt.axis("off")
-
         plt.show()
-        plt.imshow(alice_mask, cmap=plt.cm.gray, interpolation='bilinear')
-        debugline = 1
+
+        plt.figure(figsize=(10, 10))
+        plt.title("Original Image")
+        plt.imshow(figureColor)
+
+        plt.figure(figsize=(10, 10))
+        plt.title("edges map")
+        plt.imshow(edges)
+        plt.show()
 
 
 def test():
