@@ -10,3 +10,7 @@ scrapy genspider itcast "itcast.cn"
 
 ```
 
+## Reference
+
+1.[Scrapy 2.5 documentation — Scrapy 2.5.0 documentation](https://docs.scrapy.org/en/latest/)
+
