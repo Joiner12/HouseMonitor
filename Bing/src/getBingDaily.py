@@ -26,9 +26,9 @@ class getBing():
         img_direct_urls = []
         warning_1 = r"web driver check "
         if path.isfile(self.driver_path):
-            print(warning_1+"succeed")
+            print(warning_1 + "succeed")
         else:
-            print(warning_1+"failed")
+            print(warning_1 + "failed")
         if option_get == 1:
             img_direct_urls = self.__getBingWallPaperToday()
         elif option_get == 2:
@@ -48,7 +48,9 @@ class getBing():
     def __getBingWallPaperToday(self):
         img_urls = list()
         html = requests.get(url="https://cn.bing.com/?mkt=zh-CN")
-        bs_html = BeautifulSoup(html, 'html.parser')
+        bs_html = BeautifulSoup(html.text,
+                                'html.parser',
+                                from_encoding='utf-8')
         img_url = bs_html.find(name='div', attrs={"id": "bgImgProgLoad"})
         img_urls[0] = img_url
         return img_urls
@@ -60,7 +62,7 @@ class getBing():
 
 def return_func(x):
     print("return some thing to somebody")
-    y = x+1
+    y = x + 1
     return y
 
 
