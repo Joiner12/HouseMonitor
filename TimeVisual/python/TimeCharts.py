@@ -23,7 +23,7 @@ class TimeCharts():
     """
         function:
             daily pie(根据dateDraw设置参数绘制饼图)
-        definition:
+        definition: 
             dailyPie(self,dateDraw):
         params:
             dateDraw,需要绘图的日期
@@ -32,11 +32,17 @@ class TimeCharts():
 
     """
 
-    def dailyPie(self, dateDraw):
+    def dailyPie(self, dateDraw="today"):
         # 字典|列表——形参
-        pass
+        # today
+        if dateDraw == "today":
+            # sheet name
+            key_name = list(self.exlsData.keys())
+            print(datetime.now().day)
+        else:
+            print("让我感到为难的\t是挣扎的自由")
 
 
 if __name__ == "__main__":
-    curTime = datetime.now().strftime('%Y-%m-%d')
-    print(curTime, type(curTime))
+    Tc_1 = TimeCharts(r'D:\Codes\HouseMonitor\TimeVisual\data\gatte-test.xlsx')
+    Tc_1.dailyPie()
