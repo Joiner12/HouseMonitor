@@ -18,13 +18,13 @@ from pyecharts.globals import SymbolType
 """
 
 
-def DrawWordCloud(words, renderfile="", backgroundpic=""):
+def DrawWordCloud(words, renderfile, backgroundpic=""):
     if not path.isfile(backgroundpic):
         c = (
             WordCloud()
             .add("",
                  words,
-                 word_size_range=[80, 100],
+                 word_size_range=[60, 100],
                  # 将图片放在指定位置，然后读取
                  shape=SymbolType.ROUND_RECT)
             .set_global_opts(title_opts=opts.TitleOpts(title="WordCloud-自定义图片"))
