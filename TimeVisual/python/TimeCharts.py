@@ -4,7 +4,8 @@
 """
 from os import path
 from readDataFromExcel import DataFromExcel
-from datetime import datetime
+import math
+from DrawPie import DrawPie
 
 
 class TimeCharts():
@@ -38,11 +39,49 @@ class TimeCharts():
         if dateDraw == "today":
             # sheet name
             key_name = list(self.exlsData.keys())
-            print(datetime.now().day)
+            curSheetName = key_name[-1]
+            curSheetData = self.exlsData[curSheetName]
+            pieData = mergeListToDict(
+                curSheetData['事件'].tolist(), curSheetData['时长'].tolist())
+            DrawPie(pieData)
         else:
             print("让我感到为难的\t是挣扎的自由")
 
 
+"""
+    函数:
+        将两个list合并为dict，list_name标签列表，list_value值列表
+    定义:
+        def mergeListToDict(list_name, list_value)
+    输入:
+        list_name,name(list)
+        list_value,value(list)
+    输出:
+        {'list_name',list_value}
+"""
+
+
+def mergeListToDict(list_name, list_value):
+    # 删除nan
+    list_name_c = list()
+    for i in list_name:
+        if isinstance(i, float):
+            if not math.isnan(i):
+                list_name_c.append(i)
+        else:
+            list_name_c.append(i)
+
+    list_value_c = [x for x in list_value if not math.isnan(x)]
+    mergeDict = dict()
+    for k, j in zip(list_name_c, list_value_c):
+        if k in list(mergeDict.keys()):
+            mergeDict[k] = j+mergeDict[k]
+        else:
+            mergeDict[k] = j
+    return mergeDict
+
+
 if __name__ == "__main__":
-    Tc_1 = TimeCharts(r'D:\Codes\HouseMonitor\TimeVisual\data\gatte-test.xlsx')
+    Tc_1 = TimeCharts(r'D:\Code\HouseMonitor\TimeVisual\data\gatte-test.xlsx')
+    # Tc_1 = TimeCharts(r'D:\Codes\HouseMonitor\TimeVisual\data\gatte-test.xlsx')
     Tc_1.dailyPie()

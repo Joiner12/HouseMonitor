@@ -1,4 +1,5 @@
-#-*- coding:utf-8 -*-from pyecharts import options as opts
+# -*- coding:utf-8 -*-
+from pyecharts import options as opts
 from pyecharts.charts import Pie
 from pyecharts.faker import Faker
 from pyecharts import options as opts
@@ -45,3 +46,10 @@ c = (
     .set_global_opts(title_opts=opts.TitleOpts(title="Pie-富文本示例"))
     .render("pie_rich_label.html")
 )
+
+
+if __name__ == "__main__":
+    a = {"天空": "灰得像哭过", "抽屉": "泛黄的日记"}
+    for i, j in zip(a.keys(),a.values()):
+        print(i, j)
+    print("信誓旦旦给的承诺")
