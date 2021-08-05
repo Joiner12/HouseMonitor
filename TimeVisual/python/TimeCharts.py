@@ -6,6 +6,8 @@ from os import path
 from readDataFromExcel import DataFromExcel
 import math
 from DrawPie import DrawPie
+from datetime import datetime
+import pandas as pd
 
 
 class TimeCharts():
@@ -38,14 +40,62 @@ class TimeCharts():
         # today
         if dateDraw == "today":
             # sheet name
+            today_str = datetime.now().strftime('%Y-%m-%d')
             key_name = list(self.exlsData.keys())
             curSheetName = key_name[-1]
             curSheetData = self.exlsData[curSheetName]
-            pieData = mergeListToDict(
-                curSheetData['事件'].tolist(), curSheetData['时长'].tolist())
+            pieData = mergeListToDict(curSheetData['事件'].tolist(),
+                                      curSheetData['时长'].tolist())
             DrawPie(pieData)
         else:
             print("让我感到为难的\t是挣扎的自由")
+
+    """
+        function:
+            获取指定日期(2021-8-1)段内的记录数据
+        definition: 
+            getDateSpecTime(self, startDay: str = "today", endDay: str = "today")
+        params:
+            startDay,起始日期
+            endDay,结束日期
+        return:
+            pyecharts-Pie
+    """
+
+    def getDateSpecTime(self, startDay: str = "today", endDay: str = "today"):
+        setTimeStrFormat = '%Y-%m-%d'
+        retSegData = pd.DataFrame(columns=['起始', '终止', '事件', '时长', 'other'])
+        if startDay == "today":
+            startDay_i = datetime.now()
+        else:
+            startDay_i = datetime.strptime(startDay, setTimeStrFormat)
+
+        if endDay == "today":
+            endDay_i = datetime.now()
+        else:
+            endDay_i = datetime.strptime(endDay, setTimeStrFormat)
+
+        key_name = list(self.exlsData.keys())
+        for k in key_name:
+            curSheet = self.exlsData[k]
+            startTickList = curSheet['起始'].tolist()
+            for j in startTickList:
+                # 'datetime.time' -> 'datetime.datetime'
+                jJudge = j.strftime(setTimeStrFormat)
+                jJudge = datetime.strptime(jJudge, setTimeStrFormat)
+                if jJudge >= startDay_i and jJudge <= endDay_i:
+                    curIndex = startTickList.index(j)
+
+                    retSegData = retSegData.append(
+                        {
+                            '起始': curSheet.iloc[curIndex, 0],
+                            '终止': curSheet.iloc[curIndex, 1],
+                            '事件': curSheet.iloc[curIndex, 2],
+                            '时长': curSheet.iloc[curIndex, 3],
+                            'other': curSheet.iloc[curIndex, 4],
+                        },
+                        ignore_index=True)
+        return retSegData
 
 
 """
@@ -75,13 +125,12 @@ def mergeListToDict(list_name, list_value):
     mergeDict = dict()
     for k, j in zip(list_name_c, list_value_c):
         if k in list(mergeDict.keys()):
-            mergeDict[k] = j+mergeDict[k]
+            mergeDict[k] = j + mergeDict[k]
         else:
             mergeDict[k] = j
     return mergeDict
 
 
 if __name__ == "__main__":
-    Tc_1 = TimeCharts(r'D:\Code\HouseMonitor\TimeVisual\data\gatte-test.xlsx')
-    # Tc_1 = TimeCharts(r'D:\Codes\HouseMonitor\TimeVisual\data\gatte-test.xlsx')
-    Tc_1.dailyPie()
+    Tc_1 = TimeCharts('..//data//gatte-test.xlsx')
+    deblg = Tc_1.getDateSpecTime(startDay="2021-08-02", endDay="2021-08-04")

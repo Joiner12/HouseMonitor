@@ -18,11 +18,10 @@ from pyecharts.faker import Faker
 """
 
 
-def DrawPie(valueDict, renderfile=r"D:\Code\HouseMonitor\TimeVisual\html\pie.html"):
+def DrawPie(valueDict, renderfile="..//html//pie.html"):
     data_b = [list(z) for z in zip(valueDict.keys(), valueDict.values())]
     c = (
-        Pie()
-        .add(
+        Pie().add(
             "",
             data_b,
             radius=["30%", "55%"],
@@ -35,7 +34,11 @@ def DrawPie(valueDict, renderfile=r"D:\Code\HouseMonitor\TimeVisual\html\pie.htm
                 border_width=1,
                 border_radius=4,
                 rich={
-                    "a": {"color": "#999", "lineHeight": 22, "align": "center"},
+                    "a": {
+                        "color": "#999",
+                        "lineHeight": 22,
+                        "align": "center"
+                    },
                     "abg": {
                         "backgroundColor": "#e3e3e3",
                         "width": "100%",
@@ -49,7 +52,10 @@ def DrawPie(valueDict, renderfile=r"D:\Code\HouseMonitor\TimeVisual\html\pie.htm
                         "borderWidth": 0.5,
                         "height": 0,
                     },
-                    "b": {"fontSize": 16, "lineHeight": 33},
+                    "b": {
+                        "fontSize": 16,
+                        "lineHeight": 33
+                    },
                     "per": {
                         "color": "#eee",
                         "backgroundColor": "#334455",
@@ -58,8 +64,6 @@ def DrawPie(valueDict, renderfile=r"D:\Code\HouseMonitor\TimeVisual\html\pie.htm
                     },
                 },
             ),
-        )
-        .set_global_opts(title_opts=opts.TitleOpts(title="Pie-Daily"))
-        .render(renderfile)
-    )
+        ).set_global_opts(title_opts=opts.TitleOpts(
+            title="Pie-Daily")).render(renderfile))
     return c

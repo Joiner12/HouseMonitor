@@ -25,6 +25,6 @@ class DataFromExcel():
 
 
 if __name__ == "__main__":
-    df = DataFromExcel(r"D:\Code\HouseMonitor\TimeVisual\data\gatte-test.xlsx")
+    df = DataFromExcel(r"..//data//gatte-test.xlsx")
     exlsData = df.getData()
     print(exlsData)

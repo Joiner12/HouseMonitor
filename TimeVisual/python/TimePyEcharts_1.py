@@ -7,7 +7,7 @@ from readDataFromExcel import DataFromExcel
 
 # https://gallery.pyecharts.org/#/Pie/pie_rich_label
 CommuterData_o = DataFromExcel(
-    r"D:\Code\HouseMonitor\TimeVisual\data\Commuter.xlsx").getData()
+    "..//data//Commuter.xlsx").getData()
 CommuterData = CommuterData_o['Sheet1']
 fastSpeed = CommuterData.iloc[:, 7].tolist()
 fastDate = ["{}天".format(i) for i in range(len(fastSpeed))]
@@ -20,5 +20,5 @@ speedFig_1 = (
                symbol=SymbolType.ARROW)
     .set_global_opts(title_opts=opts.TitleOpts(title="Speed"))
 )
-speedFig_1.render(r"D:\Code\HouseMonitor\TimeVisual\html\TimePyEcharts_1.html")
+speedFig_1.render("..//html//TimePyEcharts_1.html")
 # %% motor data
