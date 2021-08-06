@@ -8,6 +8,7 @@ import math
 from DrawPie import DrawPie
 from datetime import datetime
 import pandas as pd
+from DrawWordCloud import DrawWordCloud
 
 
 class TimeCharts():
@@ -25,35 +26,8 @@ class TimeCharts():
 
     """
         function:
-            daily pie(根据dateDraw设置参数绘制饼图)
-        definition: 
-            dailyPie(self,dateDraw):
-        params:
-            dateDraw,需要绘图的日期
-        return:
-            pyecharts-Pie
-
-    """
-
-    def dailyPie(self, dateDraw="today"):
-        # 字典|列表——形参
-        # today
-        if dateDraw == "today":
-            # sheet name
-            today_str = datetime.now().strftime('%Y-%m-%d')
-            key_name = list(self.exlsData.keys())
-            curSheetName = key_name[-1]
-            curSheetData = self.exlsData[curSheetName]
-            pieData = mergeListToDict(curSheetData['事件'].tolist(),
-                                      curSheetData['时长'].tolist())
-            DrawPie(pieData)
-        else:
-            print("让我感到为难的\t是挣扎的自由")
-
-    """
-        function:
             获取指定日期(2021-8-1)段内的记录数据
-        definition: 
+        definition:
             getDateSpecTime(self, startDay: str = "today", endDay: str = "today")
         params:
             startDay,起始日期
@@ -97,6 +71,62 @@ class TimeCharts():
                         ignore_index=True)
         return retSegData
 
+    """
+        function:
+                daily pie(根据dateDraw设置参数绘制饼图)
+        definition:
+                def dailyPie(self,startDay: str = "today", endDay: str = "today")
+        params:
+                startDay,起始日期
+                endDay,结束日期
+        return:
+                pyecharts-Pie
+
+    """
+
+    def dailyPie(self, startDay: str = "today", endDay: str = "today"):
+        # today
+        startDayIn = startDay
+        endDayIn = endDay
+        dataDraw = self.getDateSpecTime(startDayIn, endDayIn)
+        pieData = mergeListToDict(dataDraw['事件'].tolist(),
+                                  dataDraw['时长'].tolist())
+        return DrawPie(pieData)
+
+    """
+        function:
+            绘制一段时间内事件图云(默认为最近一周事件)
+        definition:
+            periodWordCloud(self)
+        params:
+            startDay,起始日期
+            endDay,结束日期
+        return:
+            pyecharts-Pie
+    """
+
+    def periodWordCloud(self):
+        word_dict = dict()
+        curSheet = self.exlsData[list(self.exlsData.keys())[-1]]
+        eventList = curSheet['事件'].tolist()
+        eventStr = str()
+        for j in eventList:
+            eventStr += str(j)+"-"
+        eventSplit = eventStr.split("-")
+        for k in eventSplit:
+            if k in word_dict.keys():
+                word_dict[k] += 1
+            else:
+                word_dict[k] = 1
+        word_mesh = list()
+        for i in word_dict.keys():
+            word_mesh.append([i, word_dict[i]])
+        return DrawWordCloud(word_mesh, renderfile="..//html//wordCloudTest.html",
+                             backgroundpic="")
+
+    def dailyBar(self):
+        pass
+
 
 """
     函数:
@@ -133,4 +163,5 @@ def mergeListToDict(list_name, list_value):
 
 if __name__ == "__main__":
     Tc_1 = TimeCharts('..//data//gatte-test.xlsx')
-    deblg = Tc_1.getDateSpecTime(startDay="2021-08-02", endDay="2021-08-04")
+    deblg = Tc_1.dailyPie(startDay="2021-08-02", endDay="2021-08-04")
+    deblg = Tc_1.periodWordCloud()

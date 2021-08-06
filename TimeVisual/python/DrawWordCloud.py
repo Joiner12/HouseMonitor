@@ -1,8 +1,8 @@
-import json
 from pyecharts import options as opts
 from pyecharts.charts import WordCloud
 from os import path
 from pyecharts.globals import SymbolType
+from datetime import datetime
 """ 
     函数:
         调用pyecharts绘制词云
@@ -19,40 +19,37 @@ from pyecharts.globals import SymbolType
 
 
 def DrawWordCloud(words, renderfile, backgroundpic=""):
+    c = WordCloud(init_opts=opts.InitOpts(
+        page_title="word cloud "+datetime.now().strftime('%Y-%m-%d'),
+        theme="shine"))
     if not path.isfile(backgroundpic):
-        c = (
-            WordCloud()
-            .add("",
-                 words,
-                 word_size_range=[60, 100],
-                 # 将图片放在指定位置，然后读取
-                 shape=SymbolType.ROUND_RECT)
-            .set_global_opts(title_opts=opts.TitleOpts(title="WordCloud-自定义图片"))
-            .render(renderfile)
-        )
+        c.add("",
+              words,
+              word_size_range=[20, 80],
+              # 将图片放在指定位置，然后读取
+              # mask_image=backgroundpic,
+              shape="circle")
     else:
-        c = (
-            WordCloud()
-            .add("",
-                 words,
-                 word_size_range=[60, 100],
-                 # 将图片放在指定位置，然后读取
-                 mask_image=backgroundpic,
-                 shape=SymbolType.ROUND_RECT)
-            .set_global_opts(title_opts=opts.TitleOpts(title="WordCloud-自定义图片"))
-            .render(renderfile)
-        )
+        c.add("",
+              words,
+              word_size_range=[20, 80],
+              # 将图片放在指定位置，然后读取
+              # mask_image=backgroundpic,
+              shape="circle")
+
+    c.render(renderfile)
     print("缺氧过后的爱情\n")
     return c
 
 
 if __name__ == "__main__":
     #
-    data = [("跨", "12"), ("垮", "50"), ("夸", "7"), ("kua", "20"),
-            ("跨", "3"), ("垮", "15"), ("夸", "21"), ("kua", "18"),
-            ("跨", "12"), ("垮", "31"), ("夸", "7"), ("kua", "23")]
-    pic = r"D:\Code\HouseMonitor\TimeVisual\html\pic\zan.png"
+    data = [("幺鸡", "12"), ("垮", "50"), ("🀍", "7"), ("LOL", "20"),
+            ("🔞", "3"), ("pubg", "15"), ("🤣", "21"), ("杠", "18"),
+            ("🈹", "12"), ("⚅", "7"), ("🤏", "23"), ("蹦子", "18"),
+            ("下棋", "15")]
+    pic = "..//pic//zan.png"
     DrawWordCloud(
         data,
-        renderfile=r"D:\Code\HouseMonitor\TimeVisual\html\wordcloud_custom_mask_image.html",
-        backgroundpic=pic)
+        renderfile="..//html//wordcloud_custom_mask_image.html",
+        backgroundpic="")

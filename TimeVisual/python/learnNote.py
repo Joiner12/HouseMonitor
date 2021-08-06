@@ -1,6 +1,11 @@
-#%% :和→用法解释
+# %% :和→用法解释
 # -*- coding:utf-8 -*-
+from readDataFromExcel import DataFromExcel
+from datetime import datetime
+import numpy as np
+import pandas as pd
 from typing import Any, Optional, Sequence, Tuple, Union
+# %%
 
 
 def fund(a,
@@ -18,14 +23,12 @@ def fund(a,
 
 fund(1)
 
-#%% dataframe 数据拼接
+# %% dataframe 数据拼接
 """
 https://blog.csdn.net/sc179/article/details/108169436
 
 """
 # 单列的内连接
-import pandas as pd
-import numpy as np
 # 定义df1
 df1 = pd.DataFrame({
     'alpha': ['A', 'B', 'B', 'C', 'D', 'E'],
@@ -78,28 +81,25 @@ print(df3)
 https://blog.csdn.net/qq_39783601/article/details/104436303
 https://www.yiibai.com/pandas/python_pandas_dataframe.html
 """
-import pandas as pd
-import numpy as np
 
 initData = {'起始': 1, '终止': 2, '事件': 3, '时长': 5}
 testData = pd.DataFrame(columns=['起始', '终止', '事件', '时长', 'other'])
 testData = testData.append(initData, ignore_index=True)
 
-#%%
-from datetime import datetime
+# %%
 
 datetime.now()
 a = datetime.strptime("2021-8-1", '%Y-%m-%d')
 print(datetime.now() > datetime.strptime("2021-08-8", '%Y-%m-%d'))
 
-#%%
+# %%
 # -*- coding:utf-8 -*-
 """
     panda data frame learn
     ref:
     https://blog.csdn.net/xtfge0915/article/details/52938740
+    https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.empty.html
 """
-from readDataFromExcel import DataFromExcel
 # import pandas as pd
 """ 
     数据读取——single sheet
@@ -124,7 +124,9 @@ print(testData.iloc[1, 5])
 
 # series to list
 print(testData.iloc[:, 7].tolist())
-
+# %%
+test1 = pd.DataFrame({'a': []})
+print(test1.empty)
 # %%
 """ 
     数据读取——multiple sheet
@@ -137,3 +139,12 @@ if isinstance(exlsData_1, dict):
         print(k)
     # sheet_20210315 = exlsData_1['2021-03-15']
 # print(sheet_20210315)
+
+# %% string split
+orStr = "data-data-code-data-code-data-code-visual-code-info-visual-code-visual-code-visual-code-visual-code-git-visual-code-visual-code-AOA\AOD-visual-code-visual-code-visual-code-visual-code-AOA\AOD-AOA\AOD-AOA\AOD-AOA\AOD-AOA\AOD-78-AOA\AOD-开会-paper-发票-visual-code-visual-code-visual-code-visual-code-visual-code-motion-discussion-visual-code"
+splitStr = orStr.split("-")
+strList = ['从前','初识','这','世界']
+prtStr = str()
+for L in strList:
+    prtStr += (L+"-")
+print(prtStr)
