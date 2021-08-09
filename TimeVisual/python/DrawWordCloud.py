@@ -1,8 +1,8 @@
 from pyecharts import options as opts
 from pyecharts.charts import WordCloud
 from os import path
-from pyecharts.globals import SymbolType
 from datetime import datetime
+from random import randint
 """ 
     函数:
         调用pyecharts绘制词云
@@ -34,7 +34,7 @@ def DrawWordCloud(words, renderfile, backgroundpic=""):
               words,
               word_size_range=[20, 80],
               # 将图片放在指定位置，然后读取
-              # mask_image=backgroundpic,
+              mask_image=backgroundpic,
               shape="circle")
 
     c.render(renderfile)
@@ -54,38 +54,14 @@ if __name__ == "__main__":
             data,
             renderfile="..//html//wordcloud_custom_mask_image.html",
             backgroundpic="")
+
     else:
-        import jieba
-        cutOut = list()
-        with open("allinone.txt", 'r', encoding="utf-8") as f:
-            OriginLines = f.readlines()
-        for k in OriginLines:
-            seg_list = jieba.cut_for_search(k)  # 搜索引擎模式
-            excludWords = [',', '?', '。', '，', '？', '（',
-                           '(', ')', '）', '~', '!', '《', '》', '...', '~', '..', '；', '你', '我', '的']
-            for j in seg_list:
-                if not j in excludWords:
-                    cutOut.append(j)
-        wordsDict = dict()
-        for k in cutOut:
-            if k in wordsDict.keys():
-                wordsDict[k] += 1
-            else:
-                wordsDict[k] = 1
         wordsOut = list()
-        cnt = 0
-        for kk, vk in zip(wordsDict.keys(), wordsDict.values()):
-            cnt += 1
-            if cnt == 1:
-                wordsOut.append(('爽', vk))
-            elif cnt == 2:
-                wordsOut.append(('子', vk))
-            elif cnt == 3:
-                wordsOut.append(('哥', vk))
-            else:
-                cnt = 0
-        wordsOut.append(("垮", "3000"))
+        key_han = ['爽', '子', '哥', '垮', '爽子', '爽子哥', '爽哥', '垮哥', '垮子哥']
+        for k in key_han:
+            wordsOut.append((k, randint(10, 50)))
+        wordsOut.append(('垮', 100))
         DrawWordCloud(
             wordsOut,
             renderfile="..//html//wordcloud_custom_mask_image.html",
-            backgroundpic="..//pic//zan.png")
+            backgroundpic="..//html//pic//green.jpg")

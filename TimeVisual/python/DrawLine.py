@@ -42,7 +42,7 @@ def DrawLine(xData=Faker.choose(), yData=Faker.values()):
         )
         .set_global_opts(
             title_opts=opts.TitleOpts(
-                title="Daily Line",
+                title="Daily-Activity",
                 pos_top="10%",
                 pos_left="center",
                 title_textstyle_opts=opts.TextStyleOpts(
@@ -80,7 +80,7 @@ def DrawLine(xData=Faker.choose(), yData=Faker.values()):
             ),
             legend_opts=opts.LegendOpts(is_show=False),
         )
-        .render("test.html")
+        .render("..//html//lineTest.html")
     )
     return c
 
