@@ -1,37 +1,42 @@
 # -*- coding:utf-8 -*-
 import pyecharts.options as opts
-from pyecharts.charts import Bar, Line
-from pyecharts import options as opts
 from pyecharts.charts import Bar
 from pyecharts.faker import Faker
+from pyecharts.commons.utils import JsCode
 from datetime import datetime
 
 
-def DrawBar():
-    pass
-
-
-v1 = [2.0, 4.9, 7.0, 23.2, 25.6, 76.7, 135.6, 162.2, 32.6, 20.0, 6.4, 3.3]
-v2 = [2.6, 5.9, 9.0, 26.4, 28.7, 70.7, 175.6, 182.2, 48.7, 18.8, 6.0, 2.3]
-v3 = [2.0, 2.2, 3.3, 4.5, 6.3, 10.2, 20.3, 23.4, 23.0, 16.5, 12.0, 6.2]
-
-
-bar = (
-    Bar()
-    .add_xaxis(Faker.months)
-    .add_yaxis("蒸发量", v1)
-    .extend_axis(
-        yaxis=opts.AxisOpts(
-            axislabel_opts=opts.LabelOpts(formatter="{value} °C") )
+def DrawBar(xData=Faker.choose(), yData=Faker.values()):
+    xDataIn = xData
+    yDataIn = yData
+    c = (
+        Bar(init_opts=opts.InitOpts(page_title="Bar " +
+            datetime.now().strftime('%Y-%m-%d')))
+        .add_xaxis(xDataIn)
+        .add_yaxis("Daily Event", yDataIn, category_gap="60%")
+        .set_series_opts(
+            itemstyle_opts={
+                "normal": {
+                    "color": JsCode(
+                        """new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+                offset: 0,
+                color: 'rgba(0, 244, 255, 1)'
+            }, {
+                offset: 1,
+                color: 'rgba(0, 77, 167, 1)'
+            }], false)"""
+                    ),
+                    "barBorderRadius": [8, 8, 8, 8],
+                    "shadowColor": "rgb(0, 160, 221)",
+                }
+            }
+        )
+        .set_global_opts(title_opts=opts.TitleOpts(title=""),
+                         yaxis_opts=opts.AxisOpts(axislabel_opts=opts.LabelOpts(formatter="{value} /min")))
+        .render("..//html//barTest.html")
     )
-    .set_series_opts(label_opts=opts.LabelOpts(is_show=False))
-    .set_global_opts(
-        title_opts=opts.TitleOpts(title="Overlap-bar+line"),
-        yaxis_opts=opts.AxisOpts(
-            axislabel_opts=opts.LabelOpts(formatter="{value} ml")),
-    )
-)
+    return c
 
-line = Line().add_xaxis(Faker.months).add_yaxis("平均温度", v2, yaxis_index=1, is_smooth=True)
-bar.overlap(line)  # 在柱状图上叠加折线图
-bar.render("overlap_bar_line.html")
+
+if __name__ == "__main__":
+    DrawBar()

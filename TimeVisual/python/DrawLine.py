@@ -24,7 +24,7 @@ def DrawLine(xData=Faker.choose(), yData=Faker.values()):
             background_color_js), page_title="Line "+datetime.now().strftime('%Y-%m-%d')))
         .add_xaxis(xaxis_data=xDataIn)
         .add_yaxis(
-            series_name="period event",
+            series_name="Period Event",
             y_axis=yDataIn,
             is_smooth=True,
             is_symbol_show=True,
@@ -41,13 +41,13 @@ def DrawLine(xData=Faker.choose(), yData=Faker.values()):
                 color=JsCode(area_color_js), opacity=1),
         )
         .set_global_opts(
-            title_opts=opts.TitleOpts(
-                title="Daily-Activity",
-                pos_top="10%",
-                pos_left="center",
-                title_textstyle_opts=opts.TextStyleOpts(
-                    color="#fff", font_size=20),
-            ),
+            # title_opts=opts.TitleOpts(
+            #     title="Daily-Activity",
+            #     pos_top="10%",
+            #     pos_left="center",
+            #     title_textstyle_opts=opts.TextStyleOpts(
+            #         color="#fff", font_size=20),
+            # ),
             xaxis_opts=opts.AxisOpts(
                 type_="category",
                 boundary_gap=False,
@@ -78,7 +78,9 @@ def DrawLine(xData=Faker.choose(), yData=Faker.values()):
                     is_show=True, linestyle_opts=opts.LineStyleOpts(color="#ffffff1f")
                 ),
             ),
-            legend_opts=opts.LegendOpts(is_show=False),
+            legend_opts=opts.LegendOpts(
+                is_show=True,
+                textstyle_opts=opts.TextStyleOpts(font_size=20, color="#1B69D4", font_family=('Berlin Sans FB'))),
         )
         .render("..//html//lineTest.html")
     )
@@ -86,6 +88,10 @@ def DrawLine(xData=Faker.choose(), yData=Faker.values()):
 
 
 if __name__ == "__main__":
-    xDataIn = ["14", "15", "16", "17", "18", "19", "20", "21", "22", "23"]
-    yDataIn = [393, 438, 485, 631, 689, 824, 987, 1000, 1100, 1200]
-    DrawLine()
+    if True:
+        xDataIn = ['78', 'AOA\\AOD', '开会', 'paper', '发票', 'visual-code']
+        yDataIn = [42, 5, 107, 52, 79, 60]
+    else:
+        xDataIn = ["78", "15", "16", "17", "18", "19", "20", "21", "22", "23"]
+        yDataIn = [393, 438, 485, 631, 689, 824, 987, 1000, 1100, 1200]
+    DrawLine(xDataIn, yDataIn)

@@ -10,6 +10,7 @@ from datetime import datetime
 import pandas as pd
 from DrawWordCloud import DrawWordCloud
 from DrawLine import DrawLine
+from DrawBar import DrawBar
 
 
 class TimeCharts():
@@ -144,8 +145,8 @@ class TimeCharts():
             Day_i = datetime.strptime(day, setTimeStrFormat)
 
         key_name = list(self.exlsData.keys())
-        event_out = list()
-        event_tick = list()
+        event_x = list()
+        event_y = list()
         for k in key_name:
             curSheet = self.exlsData[k]
             startTickList = curSheet['起始'].tolist()
@@ -155,9 +156,55 @@ class TimeCharts():
                 jJudge = datetime.strptime(jJudge, setTimeStrFormat)
                 if jJudge == Day_i:
                     curIndex = startTickList.index(j)
-                    event_out.append(curSheet.iloc[curIndex, 2])
-                    event_tick.append(curSheet.iloc[curIndex, 3])
-        return DrawLine(event_tick, event_out)
+                    event_x.append(str(curSheet.iloc[curIndex, 2]))
+                    event_y.append(curSheet.iloc[curIndex, 3])
+        if True:
+            xDataIn = ['78', 'AOA\\AOD', '开会', 'paper', '发票', 'visual-code']
+            yDataIn = [42, 5, 107, 52, 79, 60]
+        else:
+            xDataIn = event_x
+            yDataIn = event_y
+        return DrawLine(xDataIn, yDataIn)
+
+    """
+        function:
+            绘制一段时间内事件柱状图(默认为最近一天事件)
+        definition:
+            dailyBar(self, day="today")
+        params:
+            day,日期('%Y-%m-%d')
+        return:
+            pyecharts-Bar
+    """
+
+    def dailyBar(self, day="today"):
+        setTimeStrFormat = '%Y-%m-%d'
+        if day == "today":
+            Day_i = datetime.now()
+        else:
+            Day_i = datetime.strptime(day, setTimeStrFormat)
+
+        key_name = list(self.exlsData.keys())
+        event_x = list()
+        event_y = list()
+        for k in key_name:
+            curSheet = self.exlsData[k]
+            startTickList = curSheet['起始'].tolist()
+            for j in startTickList:
+                # 'datetime.time' -> 'datetime.datetime'
+                jJudge = j.strftime(setTimeStrFormat)
+                jJudge = datetime.strptime(jJudge, setTimeStrFormat)
+                if jJudge == Day_i:
+                    curIndex = startTickList.index(j)
+                    event_x.append(str(curSheet.iloc[curIndex, 2]))
+                    event_y.append(curSheet.iloc[curIndex, 3])
+        if True:
+            xDataIn = ['78', 'AOA\\AOD', '开会', 'paper', '发票', 'visual-code']
+            yDataIn = [42, 5, 107, 52, 79, 60]
+        else:
+            xDataIn = event_x
+            yDataIn = event_y
+        return DrawBar(xDataIn, yDataIn)
 
 
 """
@@ -197,4 +244,5 @@ if __name__ == "__main__":
     Tc_1 = TimeCharts('..//data//gatte-test.xlsx')
     # deblg = Tc_1.dailyPie(startDay="2021-08-02", endDay="2021-08-04")
     # deblg = Tc_1.periodWordCloud()
-    deblg = Tc_1.dailyLine("2021-8-5")
+    # deblg = Tc_1.dailyLine("2021-8-5")
+    deblg = Tc_1.dailyBar("2021-8-5")

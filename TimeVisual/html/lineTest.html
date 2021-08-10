@@ -2,16 +2,16 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Line 2021-08-09</title>
+    <title>Line 2021-08-10</title>
             <script type="text/javascript" src="https://assets.pyecharts.org/assets/echarts.min.js"></script>
 
 </head>
 <body>
-    <div id="a71d059f82ea4b63a3fec213ccd538a2" class="chart-container" style="width:900px; height:500px;"></div>
+    <div id="bf8afb9b9231484f9d959399defddd66" class="chart-container" style="width:900px; height:500px;"></div>
     <script>
-        var chart_a71d059f82ea4b63a3fec213ccd538a2 = echarts.init(
-            document.getElementById('a71d059f82ea4b63a3fec213ccd538a2'), 'white', {renderer: 'canvas'});
-        var option_a71d059f82ea4b63a3fec213ccd538a2 = {
+        var chart_bf8afb9b9231484f9d959399defddd66 = echarts.init(
+            document.getElementById('bf8afb9b9231484f9d959399defddd66'), 'white', {renderer: 'canvas'});
+        var option_bf8afb9b9231484f9d959399defddd66 = {
     "backgroundColor": new echarts.graphic.LinearGradient(0, 0, 0, 1, [{offset: 0, color: '#C9E6EF'}, {offset: 1, color: '#287086'}], false),
     "animation": true,
     "animationThreshold": 2000,
@@ -50,7 +50,7 @@
     "series": [
         {
             "type": "line",
-            "name": "period event",
+            "name": "Period Event",
             "connectNulls": false,
             "symbol": "circle",
             "symbolSize": 6,
@@ -60,28 +60,28 @@
             "step": false,
             "data": [
                 [
-                    null,
-                    78
+                    "78",
+                    42
                 ],
                 [
-                    null,
-                    "AOA\\AOD"
+                    "AOA\\AOD",
+                    5
                 ],
                 [
-                    null,
-                    "\u5f00\u4f1a"
+                    "\u5f00\u4f1a",
+                    107
                 ],
                 [
-                    null,
-                    "paper"
+                    "paper",
+                    52
                 ],
                 [
-                    null,
-                    "\u53d1\u7968"
+                    "\u53d1\u7968",
+                    79
                 ],
                 [
-                    null,
-                    "visual-code"
+                    "visual-code",
+                    60
                 ]
             ],
             "hoverAnimation": true,
@@ -132,16 +132,21 @@
     "legend": [
         {
             "data": [
-                "period event"
+                "Period Event"
             ],
             "selected": {
-                "period event": true
+                "Period Event": true
             },
-            "show": false,
+            "show": true,
             "padding": 5,
             "itemGap": 10,
             "itemWidth": 25,
-            "itemHeight": 14
+            "itemHeight": 14,
+            "textStyle": {
+                "color": "#1B69D4",
+                "fontFamily": "Berlin Sans FB",
+                "fontSize": 20
+            }
         }
     ],
     "tooltip": {
@@ -211,12 +216,12 @@
                 }
             },
             "data": [
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
+                "78",
+                "AOA\\AOD",
+                "\u5f00\u4f1a",
+                "paper",
+                "\u53d1\u7968",
+                "visual-code"
             ]
         }
     ],
@@ -281,19 +286,12 @@
     ],
     "title": [
         {
-            "text": "Daily-Activity",
-            "left": "center",
-            "top": "10%",
             "padding": 5,
-            "itemGap": 10,
-            "textStyle": {
-                "color": "#fff",
-                "fontSize": 20
-            }
+            "itemGap": 10
         }
     ]
 };
-        chart_a71d059f82ea4b63a3fec213ccd538a2.setOption(option_a71d059f82ea4b63a3fec213ccd538a2);
+        chart_bf8afb9b9231484f9d959399defddd66.setOption(option_bf8afb9b9231484f9d959399defddd66);
     </script>
 </body>
 </html>
