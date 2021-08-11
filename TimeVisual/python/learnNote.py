@@ -1,5 +1,7 @@
 # %% :和→用法解释
 # -*- coding:utf-8 -*-
+from random import randint
+import time
 from readDataFromExcel import DataFromExcel
 from datetime import datetime
 import numpy as np
@@ -143,8 +145,17 @@ if isinstance(exlsData_1, dict):
 # %% string split
 orStr = "data-data-code-data-code-data-code-visual-code-info-visual-code-visual-code-visual-code-visual-code-git-visual-code-visual-code-AOA\AOD-visual-code-visual-code-visual-code-visual-code-AOA\AOD-AOA\AOD-AOA\AOD-AOA\AOD-AOA\AOD-78-AOA\AOD-开会-paper-发票-visual-code-visual-code-visual-code-visual-code-visual-code-motion-discussion-visual-code"
 splitStr = orStr.split("-")
-strList = ['从前','初识','这','世界']
+strList = ['从前', '初识', '这', '世界']
 prtStr = str()
 for L in strList:
     prtStr += (L+"-")
 print(prtStr)
+
+# %% sleep
+"""
+http://c.biancheng.net/view/2612.html
+"""
+print(datetime.now().strftime('%M-%S'))
+for k in range(10):
+    time.sleep(randint(1, 4))
+    print(datetime.now().strftime('%M-%S'))
