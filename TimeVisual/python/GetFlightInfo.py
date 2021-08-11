@@ -62,5 +62,6 @@ def getTableFromUrl(urlhead, selector):
 if __name__ == "__main__":
     # getTableFromUrl(r"http://www.cdairport.com/flightInfor.aspx?t=4&attribute=A&time=0&page=",
     #                 'table')
-    Fi = FlightInfo()
-    a = Fi.GetFlightData()
+    # Fi = FlightInfo()
+    # a = Fi.GetFlightData()
+    a.to_excel("FlightInfoE.xlsx")
