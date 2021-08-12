@@ -19,7 +19,7 @@ from datetime import datetime
 """
 
 
-def DrawPie(valueDict, renderfile="..//html//pie.html"):
+def DrawPie(valueDict, renderfile="..//html//pieTest.html"):
     data_b = [list(z) for z in zip(valueDict.keys(), valueDict.values())]
     c = Pie(init_opts=opts.InitOpts(
         page_title="dailyPie"+datetime.now().strftime('%Y-%m-%d')))
@@ -68,7 +68,9 @@ def DrawPie(valueDict, renderfile="..//html//pie.html"):
         ),
     )
     c.set_global_opts(title_opts=opts.TitleOpts(
-        title="Pie-Daily")).render(renderfile)
+        title="Pie-Daily"))
+    c.render(renderfile)
+    print("daily pie run finished...\n")
     return c
 
 

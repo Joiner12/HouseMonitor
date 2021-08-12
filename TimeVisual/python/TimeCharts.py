@@ -5,12 +5,16 @@
 from os import path
 from readDataFromExcel import DataFromExcel
 import math
-from DrawPie import DrawPie
 from datetime import datetime
 import pandas as pd
-from DrawWordCloud import DrawWordCloud
-from DrawLine import DrawLine
 from DrawBar import DrawBar
+from DrawMap import DrawMap
+from DrawLine import DrawLine
+from DrawWordCloud import DrawWordCloud
+from DrawPie import DrawPie
+from GetFlightInfo import FlightInfo
+from pyecharts.charts import Page
+from bs4 import BeautifulSoup
 
 
 class TimeCharts():
@@ -205,6 +209,28 @@ class TimeCharts():
             xDataIn = event_x
             yDataIn = event_y
         return DrawBar(xDataIn, yDataIn)
+    """
+    函数:
+        航班信息
+    定义:
+        flightMap(self)
+    输入:
+        updateData,bool
+    输出:
+        pyecharts,geo
+    """
+
+    def flightMap(self, updateData=False):
+        if updateData:
+            dateStamp = datetime.now().strftime("%Y-%m-%d")
+            ArrivalFile = "..//data//"+dateStamp+"A.xlsx"
+            DepartureFile = "..//data//"+dateStamp+"D.xlsx"
+            FlightInfo(ArrivalFile, DepartureFile)
+        else:
+            ArrivalFile = "..//data//FlightArrival.xlsx"
+            DepartureFile = "..//data//FlightDeparture.xlsx"
+        return DrawMap(FlightArrivalFile=ArrivalFile,
+                       FlightDepartureFile=DepartureFile)
 
 
 """
@@ -240,9 +266,55 @@ def mergeListToDict(list_name, list_value):
     return mergeDict
 
 
-if __name__ == "__main__":
+"""
+    main page
+"""
+
+
+def mainPage():
+    mainHtml = "..//html//mainpage.html"
     Tc_1 = TimeCharts('..//data//gatte-test.xlsx')
-    # deblg = Tc_1.dailyPie(startDay="2021-08-02", endDay="2021-08-04")
-    # deblg = Tc_1.periodWordCloud()
-    # deblg = Tc_1.dailyLine("2021-8-5")
-    deblg = Tc_1.dailyBar("2021-8-5")
+    pieCt = Tc_1.dailyPie(startDay="2021-08-02", endDay="2021-08-04")
+    wordcloudCt = Tc_1.periodWordCloud()
+    lineCt = Tc_1.dailyLine("2021-8-5")
+    barCt = Tc_1.dailyBar()
+    mapCt = Tc_1.flightMap(updateData=False)
+    # main page
+    mainpage = Page(page_title="MainDaily😁")
+    mainpage.add(pieCt)
+    mainpage.add(lineCt)
+    mainpage.add(mapCt)
+    mainpage.add(barCt)
+    mainpage.add(wordcloudCt)
+    mainpage.render(mainHtml)
+    # 调整main page 布局
+    # adjustMainPage(mainHtml)
+    print("main page run finished...")
+
+
+def adjustMainPage(mainpagefile="..//html//mainpage.html"):
+    with open(mainpagefile, "r+", encoding='utf-8') as html:
+        html_bf = BeautifulSoup(html, 'lxml')
+        divs = html_bf.select('.chart-container')
+        divs[0][
+            'style'] = "width:411px;height:303px;position:absolute;top:5px;left:0px;border-style:solid;border-color:#444444;border-width:0px;"
+        divs[1][
+            "style"] = "width:605px;height:274px;position:absolute;top:36px;left:333px;border-style:solid;border-color:#444444;border-width:0px;"
+        divs[2][
+            "style"] = "width:309px;height:405px;position:absolute;top:313px;left:961px;border-style:solid;border-color:#444444;border-width:0px;"
+        divs[3][
+            "style"] = "width:305px;height:405px;position:absolute;top:310px;left:0px;border-style:solid;border-color:#444444;border-width:0px;"
+
+
+        body = html_bf.find("body")
+        body["style"] = "background-color:#333333;"
+        html_new = str(html_bf)
+        html.seek(0, 0)
+        html.truncate()
+        html.write(html_new)
+        html.close()
+
+
+if __name__ == "__main__":
+    mainPage()
+    # adjustMainPage()

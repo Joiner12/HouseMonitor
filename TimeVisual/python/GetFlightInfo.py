@@ -15,23 +15,29 @@ class FlightInfo():
     arrivalUlrHead = r"http://www.cdairport.com/flightInfor.aspx?t=4&attribute=A&time=0&page="
     departureUrlHead = r"http://www.cdairport.com/flightInfor.aspx?t=4&attribute=D&time=0&page="
     htmlSelector = 'table'
-    FlightInfoData = {'Arrial': None, 'Departure': None}
+    FlightInfoData = {'Arrival': None, 'Departure': None}
 
     def __init__(self):
-        super().__init__()
+        super().__init__(savefile_1="", savefile_2="")
         # check flight info
-        self._getArrialInfo()
+        self._getArrivalInfo()
         self._getDepartureInfo()
 
-    def _getArrialInfo(self):
-        self.FlightInfoData['Arrial'] = getTableFromUrl(
+    def _getArrivalInfo(self, savefile=""):
+        arrivaldata = getTableFromUrl(
             self.arrivalUlrHead, self.htmlSelector)
-        print("我向你奔赴而来")
+        self.FlightInfoData['Arrial'] = arrivaldata
+        if savefile == "":
+            arrivaldata.to_excel(savefile)
+        print("获取机场进港航班信息")
 
-    def _getDepartureInfo(self):
-        self.FlightInfoData['Departure'] = getTableFromUrl(
+    def _getDepartureInfo(self, savefile=""):
+        departureData = getTableFromUrl(
             self.departureUrlHead, self.htmlSelector)
-        print("你就是星辰大海")
+        self.FlightInfoData['Departure'] = departureData
+        if savefile == "":
+            departureData.to_excel(savefile)
+        print("获取机场离港航班信息")
 
     def GetFlightData(self):
         return self.FlightInfoData
@@ -60,8 +66,6 @@ def getTableFromUrl(urlhead, selector):
 
 
 if __name__ == "__main__":
-    # getTableFromUrl(r"http://www.cdairport.com/flightInfor.aspx?t=4&attribute=A&time=0&page=",
-    #                 'table')
-    # Fi = FlightInfo()
-    # a = Fi.GetFlightData()
+    Fi = FlightInfo()
+    a = Fi.GetFlightData()
     a.to_excel("FlightInfoE.xlsx")

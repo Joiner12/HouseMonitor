@@ -14,11 +14,11 @@ class DataFromExcel():
 
     def __init__(self, exlsFile):
         self.exlsData = "像花虽未红 如冰虽不冻\n"
-        print(self.exlsData)
         self.rootPath = path.dirname(path.dirname(__file__))
         if not path.isfile(exlsFile):
             return
         self.exlsData = pd.read_excel(exlsFile, sheet_name=None)
+        print("读取 "+exlsFile+" 数据...\n")
 
     def getData(self):
         return self.exlsData

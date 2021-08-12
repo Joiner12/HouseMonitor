@@ -38,7 +38,7 @@ def DrawWordCloud(words, renderfile, backgroundpic=""):
               shape="circle")
 
     c.render(renderfile)
-    print("缺氧过后的爱情\n")
+    print("word cloud run finished...\n")
     return c
 
 
