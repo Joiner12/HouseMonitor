@@ -77,7 +77,7 @@ def DrawMap(FlightArrivalFile="..//data//FlightArrival.xlsx",
 
     geoAd = geoData2+geoData3
 
-    c = Geo(init_opts=opts.InitOpts(page_title="Map-CDC",
+    c = Geo(init_opts=opts.InitOpts(width="600px", height="500px", page_title="Map-CDC",
             theme="light", bg_color="transparent"))
     # 添加其他位置
     for j in extraPosition.keys():

@@ -21,8 +21,8 @@ from datetime import datetime
 
 def DrawPie(valueDict, renderfile="..//html//pieTest.html"):
     data_b = [list(z) for z in zip(valueDict.keys(), valueDict.values())]
-    c = Pie(init_opts=opts.InitOpts(
-        page_title="dailyPie"+datetime.now().strftime('%Y-%m-%d')))
+    c = Pie(init_opts=opts.InitOpts(width="600px", height="500px",
+                                    page_title="dailyPie"+datetime.now().strftime('%Y-%m-%d')))
     c.add(
         "",
         data_b,

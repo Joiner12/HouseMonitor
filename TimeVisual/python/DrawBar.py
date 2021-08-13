@@ -9,7 +9,7 @@ from datetime import datetime
 def DrawBar(xData=Faker.choose(), yData=Faker.values()):
     xDataIn = xData
     yDataIn = yData
-    c = Bar(init_opts=opts.InitOpts(page_title="Bar " +
+    c = Bar(init_opts=opts.InitOpts(width="600px", height="500px", page_title="Bar " +
             datetime.now().strftime('%Y-%m-%d')))
     c.add_xaxis(xDataIn)
     c.add_yaxis("Daily Event", yDataIn, category_gap="60%")

@@ -280,7 +280,8 @@ def mainPage():
     barCt = Tc_1.dailyBar()
     mapCt = Tc_1.flightMap(updateData=False)
     # main page
-    mainpage = Page(page_title="MainDaily😁")
+    mainpage = Page(page_title="MainDaily😁",  # layout=Page.DraggablePageLayout
+                    )
     mainpage.add(pieCt)
     mainpage.add(lineCt)
     mainpage.add(mapCt)
@@ -295,19 +296,39 @@ def mainPage():
 def adjustMainPage(mainpagefile="..//html//mainpage.html"):
     with open(mainpagefile, "r+", encoding='utf-8') as html:
         html_bf = BeautifulSoup(html, 'lxml')
-        divs = html_bf.select('.chart-container')
-        divs[0][
-            'style'] = "width:411px;height:303px;position:absolute;top:5px;left:0px;border-style:solid;border-color:#444444;border-width:0px;"
-        divs[1][
-            "style"] = "width:605px;height:274px;position:absolute;top:36px;left:333px;border-style:solid;border-color:#444444;border-width:0px;"
-        divs[2][
-            "style"] = "width:309px;height:405px;position:absolute;top:313px;left:961px;border-style:solid;border-color:#444444;border-width:0px;"
-        divs[3][
-            "style"] = "width:305px;height:405px;position:absolute;top:310px;left:0px;border-style:solid;border-color:#444444;border-width:0px;"
 
+        divs = html_bf.select('.chart-container')
+        # pie
+        divs[0]['style'] = "width:900px;height:500px;position:absolute;" + \
+            "top:85px;left:0px;border-style:solid;border-color:#444444;border-width:0px;"
+        # map
+        divs[2]["style"] = "width:900px;height:500px;position:absolute;" + \
+            "top:85px;left:960px;border-style:solid;border-color:#444444;border-width:0px;"
+        # line
+        divs[1]["style"] = "width:900px;height:480px;position:absolute;" + \
+            "top:600px;left:0px;border-style:solid;border-color:#444444;border-width:0px;"
+        # bar
+        divs[3]["style"] = "width:900px;height:480px;position:absolute;" + \
+            "top:600px;left:960px;border-style:solid;border-color:#444444;border-width:0px;"
+        # wordcloud
+        divs[4]["style"] = "width:300px;height:300px;position:absolute;" + \
+            "top:200px;left:760px;border-style:solid;border-color:#444444;border-width:0px;"
 
         body = html_bf.find("body")
-        body["style"] = "background-color:#333333;"
+        body["style"] = "background-color:#D6D7C5;"
+        # 增加header标签
+        header = html_bf.find("header")
+        if header is None:
+            header = html_bf.new_tag("header")
+            html_bf.html.body.insert(1, header)
+        header.string = datetime.now().strftime("%Y-%m-%d")
+        header["style"] = "background-color:#D6D7C5;font-size:50px;" + \
+            "text-align:center;font-family:'Impact'"
+        # 增加分割线
+        hr = html_bf.find("hr")
+        if hr is None:
+            hr = html_bf.new_tag("hr")
+            html_bf.html.body.insert(2, hr)
         html_new = str(html_bf)
         html.seek(0, 0)
         html.truncate()
@@ -316,5 +337,7 @@ def adjustMainPage(mainpagefile="..//html//mainpage.html"):
 
 
 if __name__ == "__main__":
-    mainPage()
-    # adjustMainPage()
+    if False:
+        mainPage()
+    else:
+        adjustMainPage()

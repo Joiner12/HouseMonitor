@@ -19,8 +19,12 @@ def DrawLine(xData=Faker.choose(), yData=Faker.values()):
         "[{offset: 0, color: '#eb64fb'}, {offset: 1, color: '#3fbbff0d'}], false)"
     )
 
-    c = Line(init_opts=opts.InitOpts(bg_color=JsCode(
-        background_color_js), page_title="Line "+datetime.now().strftime('%Y-%m-%d')))
+    if False:
+        c = Line(init_opts=opts.InitOpts(bg_color=JsCode(
+            background_color_js), page_title="Line "+datetime.now().strftime('%Y-%m-%d')))
+    else:
+        c = Line(init_opts=opts.InitOpts(width="600px", height="500px", bg_color="transparent",
+                 page_title="Line "+datetime.now().strftime('%Y-%m-%d')))
     c.add_xaxis(xaxis_data=xDataIn)
     c.add_yaxis(
         series_name="Period Event",
@@ -31,7 +35,7 @@ def DrawLine(xData=Faker.choose(), yData=Faker.values()):
         symbol_size=6,
         linestyle_opts=opts.LineStyleOpts(color="#fff"),
         label_opts=opts.LabelOpts(
-            is_show=True, position="top", color="white"),
+            is_show=True, position="top", color="blue"),
         itemstyle_opts=opts.ItemStyleOpts(
             color="red", border_color="#fff", border_width=3
         ),
@@ -40,17 +44,10 @@ def DrawLine(xData=Faker.choose(), yData=Faker.values()):
             color=JsCode(area_color_js), opacity=1),
     )
     c.set_global_opts(
-        # title_opts=opts.TitleOpts(
-        #     title="Daily-Activity",
-        #     pos_top="10%",
-        #     pos_left="center",
-        #     title_textstyle_opts=opts.TextStyleOpts(
-        #         color="#fff", font_size=20),
-        # ),
         xaxis_opts=opts.AxisOpts(
             type_="category",
             boundary_gap=False,
-            axislabel_opts=opts.LabelOpts(margin=30, color="#ffffff63"),
+            axislabel_opts=opts.LabelOpts(color="#8B8C7B"),
             axisline_opts=opts.AxisLineOpts(is_show=False),
             axistick_opts=opts.AxisTickOpts(
                 is_show=True,
