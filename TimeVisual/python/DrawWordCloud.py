@@ -2,7 +2,6 @@ from pyecharts import options as opts
 from pyecharts.charts import WordCloud
 from os import path
 from datetime import datetime
-from random import randint
 """ 
     函数:
         调用pyecharts绘制词云
@@ -18,7 +17,7 @@ from random import randint
 """
 
 
-def DrawWordCloud(words, renderfile, backgroundpic=""):
+def DrawWordCloud(words, backgroundpic=""):
     c = WordCloud(init_opts=opts.InitOpts(
         page_title="word cloud "+datetime.now().strftime('%Y-%m-%d'),
         theme="shine"))
@@ -37,31 +36,17 @@ def DrawWordCloud(words, renderfile, backgroundpic=""):
               mask_image=backgroundpic,
               shape="circle")
 
-    c.render(renderfile)
+    c.render("..//html//wordCloudTest.html")
     print("word cloud run finished...\n")
     return c
 
 
 if __name__ == "__main__":
     #
-    if False:
+    if True:
         data = [("幺鸡", "12"), ("垮", "50"), ("🀍", "7"), ("LOL", "20"),
                 ("🔞", "3"), ("pubg", "15"), ("🤣", "21"), ("杠", "18"),
                 ("🈹", "12"), ("⚅", "7"), ("🤏", "23"), ("蹦子", "18"),
                 ("下棋", "15")]
         pic = "..//pic//zan.png"
-        DrawWordCloud(
-            data,
-            renderfile="..//html//wordcloud_custom_mask_image.html",
-            backgroundpic="")
-
-    else:
-        wordsOut = list()
-        key_han = ['爽', '子', '哥', '垮', '爽子', '爽子哥', '爽哥', '垮哥', '垮子哥']
-        for k in key_han:
-            wordsOut.append((k, randint(10, 50)))
-        wordsOut.append(('垮', 100))
-        DrawWordCloud(
-            wordsOut,
-            renderfile="..//html//wordcloud_custom_mask_image.html",
-            backgroundpic="..//html//pic//green.jpg")
+        DrawWordCloud(data, backgroundpic="")

@@ -23,7 +23,7 @@ def DrawLine(xData=Faker.choose(), yData=Faker.values()):
         c = Line(init_opts=opts.InitOpts(bg_color=JsCode(
             background_color_js), page_title="Line "+datetime.now().strftime('%Y-%m-%d')))
     else:
-        c = Line(init_opts=opts.InitOpts(width="600px", height="500px", bg_color="transparent",
+        c = Line(init_opts=opts.InitOpts(width="600px", height="500px", bg_color="#D6D7C5",
                  page_title="Line "+datetime.now().strftime('%Y-%m-%d')))
     c.add_xaxis(xaxis_data=xDataIn)
     c.add_yaxis(
@@ -61,9 +61,9 @@ def DrawLine(xData=Faker.choose(), yData=Faker.values()):
         yaxis_opts=opts.AxisOpts(
             type_="value",
             position="right",
-            axislabel_opts=opts.LabelOpts(margin=20, color="#ffffff63"),
+            axislabel_opts=opts.LabelOpts(margin=20, color="#8B8C7B"),
             axisline_opts=opts.AxisLineOpts(
-                linestyle_opts=opts.LineStyleOpts(color="#fff")
+                linestyle_opts=opts.LineStyleOpts(color="ffffff1f")
             ),
             axistick_opts=opts.AxisTickOpts(
                 is_show=True,

@@ -9,6 +9,7 @@
 import requests
 from bs4 import BeautifulSoup
 import pandas as pd
+from datetime import datetime
 
 
 class FlightInfo():
@@ -17,27 +18,28 @@ class FlightInfo():
     htmlSelector = 'table'
     FlightInfoData = {'Arrival': None, 'Departure': None}
 
-    def __init__(self):
-        super().__init__(savefile_1="", savefile_2="")
+    def __init__(self, arrivalFile: str = "", departureFile: str = ""):
+        super().__init__()
         # check flight info
-        self._getArrivalInfo()
-        self._getDepartureInfo()
+        self._getArrivalInfo(arrivalFile)
+        self._getDepartureInfo(departureFile)
+        print("get flight info runs finished...\n")
 
     def _getArrivalInfo(self, savefile=""):
         arrivaldata = getTableFromUrl(
             self.arrivalUlrHead, self.htmlSelector)
         self.FlightInfoData['Arrial'] = arrivaldata
-        if savefile == "":
+        if not savefile == "":
             arrivaldata.to_excel(savefile)
-        print("获取机场进港航班信息")
+        print("get flight info of arrival...\n")
 
     def _getDepartureInfo(self, savefile=""):
         departureData = getTableFromUrl(
             self.departureUrlHead, self.htmlSelector)
         self.FlightInfoData['Departure'] = departureData
-        if savefile == "":
+        if not savefile == "":
             departureData.to_excel(savefile)
-        print("获取机场离港航班信息")
+        print("get flight info of departure...\n")
 
     def GetFlightData(self):
         return self.FlightInfoData
@@ -55,7 +57,6 @@ def getTableFromUrl(urlhead, selector):
         # 'table[class="arlineta departab"]'
 
         tab = soup.select(selector)[0]
-        # prettify()优化代码,[0]从pd.read_html返回的list中提取出DataFrame
         curPage = pd.read_html(tab.prettify(), header=0)[0]
         if not curPage.empty:
             FlightInfo = pd.concat([FlightInfo, curPage])
@@ -66,6 +67,7 @@ def getTableFromUrl(urlhead, selector):
 
 
 if __name__ == "__main__":
-    Fi = FlightInfo()
-    a = Fi.GetFlightData()
-    a.to_excel("FlightInfoE.xlsx")
+    filePostfix = datetime.now().strftime("%Y-%m-%d")+".xlsx"
+    arrivalFile = "..//data//FlightArrival-"+filePostfix
+    departureFile = "..//data//FlightDeparture-"+filePostfix
+    F1 = FlightInfo(arrivalFile, departureFile)
