@@ -8,4 +8,4 @@ Created on Tue Feb  7 17:34:23 2023
 from scrapy.cmdline import execute
 
 # execute(["scrapy", "crawl", "lianjia_qingyang", "-o", "items.json"])
-execute(["scrapy", "crawl", "lianjia_qingyang"])
+execute(["scrapy", "crawl", "lianjia_test"])

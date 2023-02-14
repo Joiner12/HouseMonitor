@@ -57,10 +57,14 @@ scrapy genspider itcast "itcast.cn"
 
 ```
 
+
+
 ## Reference
 
 1. [Scrapy 2.5 documentation — Scrapy 2.5.0 documentation](https://docs.scrapy.org/en/latest/)
 2. [从原理到实战，一份详实的 Scrapy 爬虫教程_菜鸟学Python的博客-CSDN博客](https://blog.csdn.net/cainiao_python/article/details/119224134)
 3. [Python Scrapy中文教程，Scrapy框架快速入门！ (biancheng.net)](http://c.biancheng.net/view/2027.html)
 4. [Scrapy 入门教程 | 菜鸟教程 (runoob.com)](https://www.runoob.com/w3cnote/scrapy-detail.html)
+4. [Scrapy 教程 — Scrapy 2.5.0 文档 (osgeo.cn)](https://www.osgeo.cn/scrapy/intro/tutorial.html)
+4. [python中yield的用法详解——最简单，最清晰的解释_冯爽朗的博客-CSDN博客_python yield](https://blog.csdn.net/mieleizhi0522/article/details/82142856)
 
