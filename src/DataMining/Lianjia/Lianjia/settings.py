@@ -12,7 +12,6 @@ BOT_NAME = "Lianjia"
 SPIDER_MODULES = ["Lianjia.spiders"]
 NEWSPIDER_MODULE = "Lianjia.spiders"
 
-
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
 #USER_AGENT = "Lianjia (+http://www.yourdomain.com)"
 
@@ -31,7 +30,7 @@ ROBOTSTXT_OBEY = True
 #CONCURRENT_REQUESTS_PER_IP = 16
 
 # Disable cookies (enabled by default)
-#COOKIES_ENABLED = False
+COOKIES_ENABLED = False
 
 # Disable Telnet Console (enabled by default)
 #TELNETCONSOLE_ENABLED = False
@@ -44,15 +43,17 @@ ROBOTSTXT_OBEY = True
 
 # Enable or disable spider middlewares
 # See https://docs.scrapy.org/en/latest/topics/spider-middleware.html
-#SPIDER_MIDDLEWARES = {
-#    "Lianjia.middlewares.LianjiaSpiderMiddleware": 543,
-#}
+SPIDER_MIDDLEWARES = {
+    "Lianjia.middlewares.LianjiaSpiderMiddleware": None,
+    "Lianjia.middlewares.RandomUserAgentMiddlware": 543
+}
 
 # Enable or disable downloader middlewares
 # See https://docs.scrapy.org/en/latest/topics/downloader-middleware.html
-#DOWNLOADER_MIDDLEWARES = {
-#    "Lianjia.middlewares.LianjiaDownloaderMiddleware": 543,
-#}
+DOWNLOADER_MIDDLEWARES = {
+    "Lianjia.middlewares.LianjiaDownloaderMiddleware": None,
+    "Lianjia.middlewares.RandomUserAgentMiddlware": 543
+}
 
 # Enable or disable extensions
 # See https://docs.scrapy.org/en/latest/topics/extensions.html

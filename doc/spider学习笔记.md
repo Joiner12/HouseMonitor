@@ -67,4 +67,6 @@ scrapy genspider itcast "itcast.cn"
 4. [Scrapy 入门教程 | 菜鸟教程 (runoob.com)](https://www.runoob.com/w3cnote/scrapy-detail.html)
 4. [Scrapy 教程 — Scrapy 2.5.0 文档 (osgeo.cn)](https://www.osgeo.cn/scrapy/intro/tutorial.html)
 4. [python中yield的用法详解——最简单，最清晰的解释_冯爽朗的博客-CSDN博客_python yield](https://blog.csdn.net/mieleizhi0522/article/details/82142856)
-
+4. [Scrapy css 语法|极客教程 (geek-docs.com)](https://geek-docs.com/scrapy/scrapy-tutorials/scrapy-css-grammar.html)
+4. [Scrapy爬虫——突破反爬虫最全策略解析 - 简书 (jianshu.com)](https://www.jianshu.com/p/a94d7de5560f)
+4. [fake-useragent/fake-useragent: Up-to-date simple useragent faker with real world database (github.com)](https://github.com/fake-useragent/fake-useragent)

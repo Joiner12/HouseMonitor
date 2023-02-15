@@ -36,47 +36,71 @@ class LianjiaTestSpider(scrapy.Spider):
         print('house number:', house_num)
         for i in range(1, page_num + 1):
             time.sleep(random.randint(1, 3) / 10)
-            # time.sleep(0.1)
-            # https://cd.fang.lianjia.com/loupan/qingyang/pg2/
+            time.sleep(0.1)
             url = response.url + 'pg{}'.format(i)
-            print(url)
-        #     yield Request(url, callback=self.parse_overview)
+            print("获取单页数据")
+            yield Request(url, callback=self.parse_overview)
 
     # 爬取房屋概况信息
     def parse_overview(self, response):
-        infos = response.css('div.content__list--item')
-        infos = response.css('.resblock-list post_ulog_exposure_scroll has-results')
-        
+        infos = response.css('.resblock-list')
+
         for info in infos:
-            suburl = info.css('.content__list--item--aside').attrib['href']
-            if 'zufang' in suburl:
-                if False:
-                    item = LianjiaItem()
-                    item['title'] = info.css(
-                        '.content__list--item--aside').attrib['title']
-                    item['location'] = '-'.join(
-                        info.css('.content__list--item--des a::text').getall())
-                    des = info.css('.content__list--item--des::text').getall()
-                    item['house_type'] = des[-2].strip()
-                else:
-                    des = info.css('.content__list--item--des::text').getall()
-                    print(des)
-                url = 'https://cd.lianjia.com' + suburl
-                print(url)
-                self.url_num += 1
-                if True:
-                    print('url_num: ', self.url_num)
-                else:
-                    yield Request(url,
-                                  meta={'item': item},
-                                  callback=self.parse_info)
-                # yield item
-            else:
-                self.apartment_num += 1
-                # print('apartment_num: ', self.apartment_num)
+            suburl = info.css('a::attr(href)').get()
+            print("楼盘链接")
+            resblock_name = infos[0].css('.resblock-name>a::text').get()
+            resblock_type = infos[0].css('.resblock-name>span::text').getall()
+            resblock_location = infos[0].css(
+                '.resblock-location>span::text').getall()
+            resblock_location_link = infos[0].css(
+                '.resblock-name>a::attr(href)').get()
+            resblock_tag = infos[0].css('.resblock-tag span::text').getall()
+            resblock_price = infos[0].css('.resblock-price *::text').getall()
+            """
+            1.['\n                        ','55000', '\xa0元/㎡(均价)', '总价480(万/套)']
+            2.['\n                        ', '价格待定']
+            """
+            url = 'https://cd.lianjia.com' + suburl
+            print(url)
+            # if 'zufang' in suburl:
+            #     if False:
+            #         item = LianjiaItem()
+            #         item['title'] = info.css(
+            #             '.content__list--item--aside').attrib['title']
+            #         item['location'] = '-'.join(
+            #             info.css('.content__list--item--des a::text').getall())
+            #         des = info.css('.content__list--item--des::text').getall()
+            #         item['house_type'] = des[-2].strip()
+            #     else:
+            #         des = info.css('.content__list--item--des::text').getall()
+            #         print(des)
+            #     url = 'https://cd.lianjia.com' + suburl
+            #     print(url)
+            #     self.url_num += 1
+            #     if True:
+            #         print('url_num: ', self.url_num)
+            #     else:
+            #         yield Request(url,
+            #                       meta={'item': item},
+            #                       callback=self.parse_info)
+            #     # yield item
+            # else:
+            #     self.apartment_num += 1
+            #     # print('apartment_num: ', self.apartment_num)
 
     # 爬取房屋详细信息
     def parse_info(self, response):
+        resblock_name = response.css('.title-wrap>div>h2::text').get()
+        resblock_name_second_name = response.css(
+            '.title-wrap>.other-name::text').get()
+        # ['参考均价', '16000', '元/平(单价) ', '95', '(万/套)(总价)', '参考均价', '16000', ' 元/平']
+        reblock_price = response.css('.price span::text').getall()
+        # ['商业类', '环线房', '近主干道', '配套齐全']
+        reblock_tag = response.css('.resblock-tag>.item span::text').getall()
+        reblock_location_content = response.css(
+            '.info-list .content::text').get()
+        reblock_location_map = response.css(
+            '.info-list .map a::attr(href)').get()
         try:
             item = response.meta['item']
 
