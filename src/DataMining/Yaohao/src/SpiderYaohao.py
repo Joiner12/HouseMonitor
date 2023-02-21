@@ -15,20 +15,22 @@ from selenium.webdriver.support import expected_conditions
 import os, re
 from time import sleep
 import random
+
 # workspace
 cmd = '''cd D:\Code\HouseMonitor\src\DataMining\Yaohao\src'''
 os.system(cmd)
+data_file = r'D:\Code\HouseMonitor\src\DataMining\Yaohao\test.txt'
+data = list()
+table_header = [
+    "区域", "项目名称", "预售证号", "预售范围", "住房套数", "开发商咨询电话", "登记开始时间", "登记结束时间",
+    "名单外人员资格已释放时间", "名单内人员资格已释放时间", "预审码取得截止时间", "项目报名状态", "联系地址"
+]
 
 
 class Yaohao():
     # 基链接
     base_url = ""
     browser = None
-    table_header = [
-        "区域", "项目名称", "预售证号", "预售范围", "住房套数", "开发商咨询电话", "登记开始时间", "登记结束时间",
-        "名单外人员资格已释放时间", "名单内人员资格已释放时间", "预审码取得截止时间", "项目报名状态", "联系地址"
-    ]
-    all_info = list()
 
     def __init__(
             self,
@@ -45,24 +47,27 @@ class Yaohao():
                     "platform": "WINDOWS",
                     "ms:edgeOptions": {
                         'extensions': [],
-                        # 'args': ['--headless']
+                        #'args': ['--headless']
                     }
                 })
-
         except:
             # return
             pass
+        # 主页面
         self.start_home_page()
-        cur_page = 1
-        while True:
-            cur_page = self.get_cur_page_num()
-            cur_page_table = self.get_table_content()
-            self.all_info.append(cur_page_table)
-            sleep(5 + random.random())
-            self.next_page()
-            if cur_page >= 288:
-                break
-
+        try:
+            cur_page = 1
+            while True:
+                cur_page = self.get_cur_page_num()
+                cur_page_table = self.get_table_content()
+                data.append(cur_page_table)
+                sleep(5 + random.random())
+                self.next_page()
+                if cur_page >= 100:
+                    break
+        except:
+            pass
+        data_to_file(data)
         self.browser.close()
 
     # 跳转到信息页面
@@ -93,7 +98,6 @@ class Yaohao():
         return int(page_num)
 
     # 读取表格
-    #
     def get_table_content(self, table_id="_projectInfo"):
         arr = list()
         arr_row = list()
@@ -109,7 +113,7 @@ class Yaohao():
             WebDriverWait(self.browser, 2).until(
                 expected_conditions.presence_of_all_elements_located(
                     (By.ID, "dialog-view")))
-            sleep(1 + random.random())
+            sleep(2 + random.random())
             content_dia = self.browser.find_element(By.ID, "dialog-view").text
             house_location = re.findall("联系地址.*?\n", content_dia)
             # 关闭弹窗
@@ -128,6 +132,17 @@ class Yaohao():
             print(arr_row)
             arr.append(arr_row)  # 将表格数据组成二维的列表
         return arr
+
+
+def data_to_file(data):
+    with open(data_file, 'w') as f:
+        temp = ",".join(table_header)
+        f.writelines(temp + "\r\n")
+    with open(data_file, 'a') as f:
+        for data_table in data:
+            for data_row in data_table:
+                temp = ",".join(data_row)
+                f.writelines(temp + "\r\n")
 
 
 if __name__ == "__main__":

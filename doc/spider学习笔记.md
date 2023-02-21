@@ -83,3 +83,4 @@ scrapy genspider itcast "itcast.cn"
 4. [Python JSON | 菜鸟教程 (runoob.com)](https://www.runoob.com/python/python-json.html)
 4. [ python+selenium(14)---定位table并获取table中的数据，并删除某一行数据（如果每行后面提供删除按钮）_wjgccsdn的博客-CSDN博客](https://blog.csdn.net/wjgccsdn/article/details/114023032)
 4. [python中format用法（最全汇总）_西部点心王的博客-CSDN博客_python format](https://blog.csdn.net/moqisaonianqiong/article/details/114674204)
+4. [数据结构简介 | Pandas (pypandas.cn)](https://pypandas.cn/docs/getting_started/dsintro.html)
