@@ -131,3 +131,6 @@ dmypy.json
 # vscode
 .vscode
 *.code-workspace
+
+#edge driver
+src/DataMining/Yaohao/driver

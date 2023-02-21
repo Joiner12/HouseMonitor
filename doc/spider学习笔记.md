@@ -57,6 +57,16 @@ scrapy genspider itcast "itcast.cn"
 
 ```
 
+问：
+
+1. ->
+
+   ```python
+   def __init__(self) -> None:
+   ```
+
+2. s
+
 
 
 ## Reference
@@ -70,3 +80,6 @@ scrapy genspider itcast "itcast.cn"
 4. [Scrapy css 语法|极客教程 (geek-docs.com)](https://geek-docs.com/scrapy/scrapy-tutorials/scrapy-css-grammar.html)
 4. [Scrapy爬虫——突破反爬虫最全策略解析 - 简书 (jianshu.com)](https://www.jianshu.com/p/a94d7de5560f)
 4. [fake-useragent/fake-useragent: Up-to-date simple useragent faker with real world database (github.com)](https://github.com/fake-useragent/fake-useragent)
+4. [Python JSON | 菜鸟教程 (runoob.com)](https://www.runoob.com/python/python-json.html)
+4. [ python+selenium(14)---定位table并获取table中的数据，并删除某一行数据（如果每行后面提供删除按钮）_wjgccsdn的博客-CSDN博客](https://blog.csdn.net/wjgccsdn/article/details/114023032)
+4. [python中format用法（最全汇总）_西部点心王的博客-CSDN博客_python format](https://blog.csdn.net/moqisaonianqiong/article/details/114674204)
