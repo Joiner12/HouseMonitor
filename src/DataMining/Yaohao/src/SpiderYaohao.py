@@ -19,7 +19,7 @@ import random
 # workspace
 cmd = '''cd D:\Code\HouseMonitor\src\DataMining\Yaohao\src'''
 os.system(cmd)
-data_file = r'D:\Code\HouseMonitor\src\DataMining\Yaohao\test.txt'
+data_file = r'D:\Code\HouseMonitor\src\DataMining\Yaohao\test-1.txt'
 data = list()
 table_header = [
     "区域", "项目名称", "预售证号", "预售范围", "住房套数", "开发商咨询电话", "登记开始时间", "登记结束时间",
@@ -63,7 +63,7 @@ class Yaohao():
                 data.append(cur_page_table)
                 sleep(5 + random.random())
                 self.next_page()
-                if cur_page >= 100:
+                if cur_page >= 288:
                     break
         except:
             pass
