@@ -4,9 +4,84 @@
 # https://docs.scrapy.org/en/latest/topics/spider-middleware.html
 
 from scrapy import signals
-
+from scrapy.http.response.html import HtmlResponse
 # useful for handling different item types with a single interface
-from itemadapter import is_item, ItemAdapter
+# from itemadapter import is_item, ItemAdapter
+# rewrite middleware
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+import time
+from random import random
+
+
+class YaohaoscrapyDownloaderMiddleware:
+
+    def __init__(self):
+        self.driver = webdriver.Edge(
+            executable_path=
+            r"D:\Code\HouseMonitor\src\DataMining\Yaohao\driver\msedgedriver.exe",
+            capabilities={
+                "browserName": "MicrosoftEdge",
+                "version": "",
+                "platform": "WINDOWS",
+                "ms:edgeOptions": {
+                    'extensions': [],
+                    # 'args': ['--headless']
+                }
+            })
+
+    def __del__(self):
+        self.driver.close()
+
+    def process_request(self, request, spider):
+        # Called for each request that goes through the downloader
+        # middleware.
+
+        # Must either:
+        # - return None: continue processing this request
+        # - or return a Response object
+        # - or return a Request object
+        # - or raise IgnoreRequest: process_exception() methods of
+        #   installed downloader middleware will be called
+        print('使用 selenium 请求页面:{}'.format(request.url))
+        # 主页跳转
+        if request.url.startswith(
+                "https://zw.cdzjryb.com/lottery/accept/index"):
+            self.driver.get(request.url)
+            WebDriverWait(self.driver,
+                          (By.XPATH, "/html/body/div[3]/ul[2]/a[1]/li"))
+            self.driver.find_element(
+                By.XPATH, "/html/body/div[3]/ul[2]/a[1]/li").click()
+            time.sleep(2 + 2 * random())
+            # 将最后渲染得到的页面源码作为响应返回
+            return HtmlResponse(url=request.url,
+                                body=self.driver.page_source,
+                                request=request,
+                                encoding='utf-8',
+                                status=200)
+        if request.url.startswith(
+                "https://zw.cdzjryb.com/lottery/accept/projectList"):
+            self.driver.get(request.url)
+            WebDriverWait(self.driver,
+                          (By.XPATH, "/html/body/div[3]/ul[2]/a[1]/li"))
+            # 点击下一页更新
+            next_button = self.driver.find_element(
+                By.XPATH, "/html/body/div[2]/div[3]/a[8]")
+            next_button.click()
+            page_num = self.driver.find_element(
+                By.CSS_SELECTOR,
+                "body > div.nav.nav-nobg > div.pages-box > a.on").text
+            cut_str = "*" * 20 + "\r\n" + '|{: ^18}|\r\n'.format(
+                int(page_num)) + "*" * 20
+            print(cut_str)
+            time.sleep(2 + 2 * random())
+            return HtmlResponse(url=request.url,
+                                body=self.driver.page_source,
+                                request=request,
+                                encoding='utf-8',
+                                status=200)
+        # return None
 
 
 class YaohaoscrapySpiderMiddleware:
@@ -56,6 +131,7 @@ class YaohaoscrapySpiderMiddleware:
         spider.logger.info("Spider opened: %s" % spider.name)
 
 
+"""
 class YaohaoscrapyDownloaderMiddleware:
     # Not all methods need to be defined. If a method is not defined,
     # scrapy acts as if the downloader middleware does not modify the
@@ -101,3 +177,5 @@ class YaohaoscrapyDownloaderMiddleware:
 
     def spider_opened(self, spider):
         spider.logger.info("Spider opened: %s" % spider.name)
+
+"""

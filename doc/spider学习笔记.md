@@ -130,4 +130,10 @@ scrapy genspider itcast "itcast.cn"
 4. [Python批量查询地点坐标基于腾讯地图 - 知乎 (zhihu.com)](https://zhuanlan.zhihu.com/p/401853601)
 4. [(1条消息) Python获取高德POI(关键词搜索法)_Giser@lin的博客-CSDN博客](https://blog.csdn.net/abcbbbd/article/details/123650789)
 4. [利用 Python 进行数据分析 · 第 2 版 - 《利用 Python 进行数据分析 · 第 2 版》 - 书栈网 · BookStack](https://www.bookstack.cn/read/pyda-2e-zh/README.md)
-4. [最新Scrapy（CrawlSpider）+Selenium全站数据爬取（简书）_CodeBoy‍的博客-CSDN博客](https://blog.csdn.net/qq_45352972/article/details/108985542)
+
+selenium+scrapy
+
+1. [最新Scrapy（CrawlSpider）+Selenium全站数据爬取（简书）_CodeBoy‍的博客-CSDN博客](https://blog.csdn.net/qq_45352972/article/details/108985542)
+2. [[Python3网络爬虫开发实战\] 13.8–Scrapy 对接 Selenium | 静觅 (cuiqingcai.com)](https://cuiqingcai.com/8397.html)
+3. [scrapy对接selenium原理超详细解读！！！！_scrapy selenium_独角兽小马的博客-CSDN博客](https://blog.csdn.net/weixin_44457673/article/details/120074707)
+4. [使用 Scrapy + Selenium 爬取动态渲染的页面 - 腾讯云开发者社区-腾讯云 (tencent.com)](https://cloud.tencent.com/developer/article/2016732?shareByChannel=link)

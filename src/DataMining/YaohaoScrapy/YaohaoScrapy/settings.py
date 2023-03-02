@@ -12,15 +12,14 @@ BOT_NAME = "YaohaoScrapy"
 SPIDER_MODULES = ["YaohaoScrapy.spiders"]
 NEWSPIDER_MODULE = "YaohaoScrapy.spiders"
 
-
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
 #USER_AGENT = "YaohaoScrapy (+http://www.yourdomain.com)"
 
 # Obey robots.txt rules
-ROBOTSTXT_OBEY = False
+# ROBOTSTXT_OBEY = True
 
 # Configure maximum concurrent requests performed by Scrapy (default: 16)
-#CONCURRENT_REQUESTS = 32
+CONCURRENT_REQUESTS = 32
 
 # Configure a delay for requests for the same website (default: 0)
 # See https://docs.scrapy.org/en/latest/topics/settings.html#download-delay
@@ -50,9 +49,9 @@ ROBOTSTXT_OBEY = False
 
 # Enable or disable downloader middlewares
 # See https://docs.scrapy.org/en/latest/topics/downloader-middleware.html
-#DOWNLOADER_MIDDLEWARES = {
-#    "YaohaoScrapy.middlewares.YaohaoscrapyDownloaderMiddleware": 543,
-#}
+DOWNLOADER_MIDDLEWARES = {
+    "YaohaoScrapy.middlewares.YaohaoscrapyDownloaderMiddleware": 543,
+}
 
 # Enable or disable extensions
 # See https://docs.scrapy.org/en/latest/topics/extensions.html
