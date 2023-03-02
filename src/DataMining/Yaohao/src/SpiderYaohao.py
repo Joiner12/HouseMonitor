@@ -60,8 +60,9 @@ class Yaohao():
             while True:
                 cur_page = self.get_cur_page_num()
                 cur_page_table = self.get_table_content()
+                # cur_page_table = self.get_table_content_v1()
                 data.append(cur_page_table)
-                sleep(5 + random.random())
+                sleep(2 + random.random())
                 self.next_page()
                 if cur_page >= 288:
                     break
@@ -73,15 +74,16 @@ class Yaohao():
     # 跳转到信息页面
     def start_home_page(self):
         self.browser.get(self.base_url)
-        self.browser.find_element(By.XPATH,
-                                  "/html/body/div[3]/ul[2]/a[1]/li").click()
+        x_path = '//*[@id="projectList"]'
+        # x_path = "/html/body/div[3]/ul[2]/a[1]/li"
+        self.browser.find_element(By.XPATH, x_path).click()
 
     # 下一页
     def next_page(self):
-        next_button = self.browser.find_element(
-            By.XPATH, "/html/body/div[2]/div[3]/a[8]")
+        x_path = '//div[@class="pages-box"]//a[8]'
+        # x_path = '/html/body/div[2]/div[3]/a[8]'
+        next_button = self.browser.find_element(By.XPATH, x_path)
         next_button.click()
-        # print("jump to page:%0.f" % (self.get_cur_page_num()))
 
     # 当前页数
     def get_cur_page_num(self):
@@ -96,6 +98,13 @@ class Yaohao():
             int(page_num)) + "*" * 20
         print(cut_str)
         return int(page_num)
+
+    # 读取表格
+    def get_table_content_v1(self):
+        x_path = '//table//tbody//tr'
+        trs = self.browser.find_element(By.XPATH, x_path)
+        for tr in trs:
+            print(tr)
 
     # 读取表格
     def get_table_content(self, table_id="_projectInfo"):
