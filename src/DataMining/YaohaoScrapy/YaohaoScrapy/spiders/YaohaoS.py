@@ -9,15 +9,10 @@ class YaohaosSpider(scrapy.Spider):
     start_urls = ["https://zw.cdzjryb.com/lottery/accept/index"]
 
     def parse(self, response):
-        # trs = response.xpath('//table/tr')
-        # for tr in trs:
-        #     print(tr.xpath('//td[4]/text()').extract())
-        for page in range(5):
-            yield scrapy.Request(
-                url="https://zw.cdzjryb.com/lottery/accept/projectList",
-                callback=self.get_registration_house,
-                meta={'page': page},
-                dont_filter=True)
+        yield scrapy.Request(
+            url="https://zw.cdzjryb.com/lottery/accept/projectList",
+            callback=self.parse,
+            dont_filter=True)
 
     def get_registration_house(self, response):
         quatar_name = response.xpath(

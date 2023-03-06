@@ -59,9 +59,9 @@ class Yaohao():
             cur_page = 1
             while True:
                 cur_page = self.get_cur_page_num()
-                cur_page_table = self.get_table_content()
+                #cur_page_table = self.get_table_content()
                 # cur_page_table = self.get_table_content_v1()
-                data.append(cur_page_table)
+                #data.append(cur_page_table)
                 sleep(2 + random.random())
                 self.next_page()
                 if cur_page >= 288:

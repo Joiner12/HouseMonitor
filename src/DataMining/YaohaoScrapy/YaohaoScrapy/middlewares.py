@@ -27,7 +27,7 @@ class YaohaoscrapyDownloaderMiddleware:
                 "platform": "WINDOWS",
                 "ms:edgeOptions": {
                     'extensions': [],
-                    'args': ['--headless']
+                    # 'args': ['--headless']
                 }
             })
 
@@ -36,8 +36,8 @@ class YaohaoscrapyDownloaderMiddleware:
 
     def process_request(self, request, spider):
         # 主页跳转
-        page = request.meta.get('page', 1)
         if request.url == "https://zw.cdzjryb.com/lottery/accept/index":
+            print(1)
             try:
                 # print('使用 selenium 请求页面:{}'.format(request.url))
                 self.driver.get(request.url)
@@ -58,15 +58,17 @@ class YaohaoscrapyDownloaderMiddleware:
                                     request=request)
 
         if request.url == "https://zw.cdzjryb.com/lottery/accept/projectList":
+            # https://zw.cdzjryb.com/lottery/accept/projectList
+            print(2)
             try:
                 # print('使用 selenium 请求页面:{}'.format(request.url))
                 self.driver.get(request.url)
-                WebDriverWait(self.driver,
-                              (By.XPATH, "/html/body/div[3]/ul[2]/a[1]/li"))
+                x_path = '//div[@class="pages-box"]//a[8]'
+                WebDriverWait(self.driver, (By.XPATH, x_path))
                 # 点击下一页更新
-                next_button = self.driver.find_element(
-                    By.XPATH, "/html/body/div[2]/div[3]/a[8]")
+                next_button = self.driver.find_element(By.XPATH, x_path)
                 next_button.click()
+                print('点击下一页')
                 if False:
                     page_num = self.driver.find_element(
                         By.CSS_SELECTOR,
@@ -74,7 +76,8 @@ class YaohaoscrapyDownloaderMiddleware:
                     cut_str = "*" * 20 + "\r\n" + '|{: ^18}|\r\n'.format(
                         int(page_num)) + "*" * 20
                     print(cut_str)
-                time.sleep(1 + 2 * random())
+
+                time.sleep(3 + 2 * random())
                 return HtmlResponse(url=self.driver.current_url,
                                     body=self.driver.page_source,
                                     request=request,
